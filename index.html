@@ -156,6 +156,35 @@
     }
     .chip.good .mini-dot{ background:var(--good); box-shadow:0 0 12px rgba(46,229,157,.28); }
     .chip.rank .mini-dot{ background:var(--green); box-shadow:0 0 12px rgba(40,226,165,.28); }
+    /* Title actions / selects */
+    .title-actions{ display:flex; align-items:center; gap:10px; }
+    .select-wrap{ position:relative; display:inline-flex; align-items:center; }
+    .select{
+      appearance:none;
+      -webkit-appearance:none;
+      -moz-appearance:none;
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--border);
+      color:var(--text);
+      border-radius:999px;
+      padding:7px 34px 7px 12px;
+      font-size:12px;
+      letter-spacing:.2px;
+      outline:none;
+      cursor:pointer;
+    }
+    .select:focus{ border-color:rgba(87,164,255,.55); box-shadow:0 0 0 3px rgba(87,164,255,.12); }
+    .select option{ background:#0b0d12; color:var(--text); }
+    .select-wrap:after{
+      content:"▾";
+      position:absolute;
+      right:12px;
+      color:var(--muted);
+      pointer-events:none;
+      font-size:12px;
+      transform:translateY(-1px);
+    }
+
     .chip.warn .mini-dot{ background:var(--warn); }
     .chip.bad .mini-dot{ background:var(--bad); }
 
@@ -238,8 +267,14 @@
 
     /* ===== CHART WRAPS ===== */
     .chart-wrap{ position:relative; }
-    .chart-compact{ height:240px; }
-    .chart-compact canvas{ width:100% !important; height:240px !important; }
+
+    /* Faz o gráfico ocupar toda a altura do card (remove “vazio” embaixo) */
+    #openBandsModal{ display:flex; flex-direction:column; }
+    #openBandsModal .chart-wrap{ flex:1 1 auto; }
+
+    .chart-compact{ height:100%; min-height:240px; }
+    .chart-compact canvas{ width:100% !important; height:100% !important; }
+
     .chart-tall{ height:320px; }
     .chart-tall canvas{ width:100% !important; height:320px !important; }
     .chart-mini{ height:190px; }
@@ -548,6 +583,114 @@
       background:var(--panel);
     }
 
+
+    /* ========= MAPA DE CALOR INTERATIVO ========= */
+
+    #cardHeatmap .heatmap-wrap{
+      width:100%;
+      aspect-ratio: 2048 / 761;
+      height:auto;
+      min-height:unset;
+      overflow:hidden;
+
+      /* mesma “moldura” dos outros elementos do dash */
+      border:1px solid rgba(255,255,255,0.08);
+      background: rgba(0,0,0,0.18);
+    }
+
+    #heatSvg{
+      width:100%;
+      height:100%;
+      display:block;
+    }
+
+
+
+
+    /* legenda das zonas */
+    .zones-legend{
+      display:grid;
+      grid-template-columns: repeat(4, minmax(220px, 1fr));
+      gap:10px;
+    }
+
+    .zone-item{
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,0.08);
+      background: rgba(0,0,0,0.18);
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+    
+      cursor:pointer;
+    }
+    .zone-item:hover{ filter:brightness(1.08); border-color:rgba(255,255,255,0.16); }
+    .zone-item.active{ outline:1px solid rgba(255,204,102,0.35); box-shadow:0 0 0 1px rgba(255,204,102,0.12) inset; }
+    .zone-swatch{ width:10px; height:10px; border-radius:999px; border:1px solid rgba(255,255,255,0.18); background:rgba(255,255,255,0.12); margin-top:2px; }
+
+
+    .zone-badge{
+      min-width:52px;
+      height:28px;
+      border-radius:12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      font-size:12px;
+      letter-spacing:.3px;
+      border:1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.03);
+      color: rgba(255,255,255,0.86);
+    }
+
+    .zone-meta{
+      font-size:11px;
+      color: rgba(255,255,255,0.72);
+      line-height:1.25;
+    }
+    .zone-meta .t{
+      font-size:12px;
+      font-weight:900;
+      color: rgba(255,255,255,0.88);
+      margin-bottom:2px;
+    }
+
+    @media (max-width:1650px){
+      .zones-legend{ grid-template-columns: repeat(2, minmax(220px, 1fr)); }
+    }
+    @media (max-width:900px){
+      .zones-legend{ grid-template-columns: 1fr; }
+    }
+
+
+
+    /* polígonos */
+    .heat-poly{
+    stroke: rgba(255,255,255,0.22);
+    stroke-width: 3;
+    vector-effect: non-scaling-stroke;
+    cursor: pointer;
+    }
+    .heat-poly.active{ stroke: rgba(255,204,102,0.90); stroke-width:4.2; }
+
+
+    .heat-poly:hover{
+    stroke: rgba(255,255,255,0.60);
+    }
+
+    /* labels */
+    .heat-label{
+    font: 600 18px system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    fill: rgba(255,255,255,0.85);
+    paint-order: stroke;
+    stroke: rgba(0,0,0,0.55);
+    stroke-width: 4px;
+    pointer-events:none;
+    }
+
+
     /* ===== RESPONSIVE ===== */
     @media (max-width:1650px){
       .kpi-row{ grid-template-columns:repeat(3, minmax(220px, 1fr)); }
@@ -653,10 +796,19 @@
       <div class="card pad clickable" id="openBandsModal">
         <div class="card-title">
           <div>
-            <h2>Público por Banda (Todas as noites)</h2>
+            <h2 id="bandsCardTitle">Público por Banda — 27–31/12 — Virada Salvador (todas as bandas)</h2>
             <div class="hint">Comparativo consolidado (dados fictícios realistas).</div>
           </div>
-          <div class="chip rank"><span class="mini-dot"></span><span>ranking</span></div>
+          <div class="title-actions">
+            <div class="select-wrap">
+              <select id="bandsEventFilter" class="select" aria-label="Filtrar evento do gráfico de público por banda">
+                <option value="25/12">25/12 — Show Frei Gilson</option>
+                <option value="26/12">26/12 — Show Roberto Carlos</option>
+                <option value="27-31/12" selected>27–31/12 — Virada Salvador (todas as bandas)</option>
+              </select>
+            </div>
+            <div class="chip rank"><span class="mini-dot"></span><span>ranking</span></div>
+          </div>
         </div>
         <div class="chart-wrap chart-compact">
           <canvas id="chartAllBandsCompact"></canvas>
@@ -711,6 +863,41 @@
         <canvas id="chartBigRanking"></canvas>
       </div>
     </div>
+
+    <section class="card pad" id="cardHeatmap">
+      <div class="card-title">
+        <div>
+          <h3>Mapa de calor por setor</h3>
+          <div class="hint">Intensidade por região (atualiza automaticamente).</div>
+        </div>
+        <div class="chip" id="heatLegendChip">
+          <span class="mini-dot" style="background: rgba(255,204,102,0.95)"></span>
+          <span>zonas</span>
+        </div>
+      </div>
+
+      <div class="heatmap-wrap">
+        <svg id="heatSvg" viewBox="0 0 2048 761" preserveAspectRatio="xMidYMid meet">
+          <g id="heatStage">
+            <image id="heatBaseImg"
+                  href="4Mapa de Calor - Virada 2026.png"
+                  x="0" y="-196"
+                  width="2048" height="1152"></image>
+
+            <g id="heatPolygons"></g>
+            <g id="heatLabels"></g>
+          </g>
+        </svg>
+
+      </div>
+
+      <div class="divider" style="margin:12px 0 10px;"></div>
+
+      <!-- legenda (vamos preencher via JS) -->
+      <div id="zonesLegend" class="zones-legend"></div>
+    </section>
+
+
 
     <!-- 5 nights in one line (telão) -->
     <div class="night-row">
@@ -826,7 +1013,7 @@
   <div class="modal" id="modalBands">
     <div class="modal-panel">
       <div class="modal-head">
-        <h3>Público por Banda (Todas as noites) — Detalhes</h3>
+        <h3 id="modalBandsTitle">Público por Banda — 27–31/12 — Virada Salvador (todas as bandas) — Detalhes</h3>
         <button class="modal-close" data-close="modalBands">Fechar</button>
       </div>
       <div class="modal-body">
@@ -945,6 +1132,95 @@
     </div>
   </div>
 
+  <!-- MODAL: ZONA (mapa de calor) -->
+  <div class="modal" id="modalZone">
+    <div class="modal-panel">
+      <div class="modal-head">
+        <div>
+          <h3 id="zoneModalTitle">Detalhes da Zona</h3>
+          <div class="hint" id="zoneModalSub">Histórico por dia e por período.</div>
+        </div>
+        <button class="modal-close" data-close="modalZone">Fechar</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="card pad" style="box-shadow:none;">
+          <div class="card-title">
+            <div>
+              <h3>Resumo operacional</h3>
+              <div class="hint">Período: 12/05/2025 até 31/05/2025 (placeholders — pronto para plugar no banco).</div>
+            </div>
+            <div class="chip rank"><span class="mini-dot"></span><span>zona</span></div>
+          </div>
+
+          <div class="smart-grid" style="margin-top:10px;">
+            <div class="card pad" style="border:1px solid rgba(255,255,255,.08); background:rgba(0,0,0,.18);">
+              <div class="k-label">Total no período</div>
+              <div class="k-value mono" id="zoneKpiTotal">--</div>
+              <div class="k-sub">Somatório estimado (todas as câmeras da zona).</div>
+            </div>
+            <div class="card pad" style="border:1px solid rgba(255,255,255,.08); background:rgba(0,0,0,.18);">
+              <div class="k-label">Média por dia</div>
+              <div class="k-value mono" id="zoneKpiAvg">--</div>
+              <div class="k-sub">Média diária no período.</div>
+            </div>
+            <div class="card pad" style="border:1px solid rgba(255,255,255,.08); background:rgba(0,0,0,.18);">
+              <div class="k-label">Pico do período</div>
+              <div class="k-value mono" id="zoneKpiPeak">--</div>
+              <div class="k-sub" id="zoneKpiPeakSub">--</div>
+            </div>
+            <div class="card pad" style="border:1px solid rgba(255,255,255,.08); background:rgba(0,0,0,.18);">
+              <div class="k-label">Status (fluxo)</div>
+              <div class="k-value mono" id="zoneKpiStatus">--</div>
+              <div class="k-sub">Z08 usa regra “últimos 5 min vs média”.</div>
+            </div>
+          </div>
+
+          <div class="divider" style="margin:14px 0;"></div>
+
+          <div class="row-3-1" style="grid-template-columns: 1.3fr .7fr;">
+            <div class="card pad" style="box-shadow:none; border:1px solid rgba(255,255,255,.08); background:rgba(0,0,0,.18);">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+                <div style="font-weight:900; letter-spacing:.2px; color:rgba(255,255,255,.86);">Histórico diário</div>
+                <div class="chip"><span class="mini-dot" style="background:var(--blue)"></span><span>dia</span></div>
+              </div>
+              <div class="chart-wrap" style="height:280px; margin-top:10px;">
+                <canvas id="zoneChartDaily"></canvas>
+              </div>
+            </div>
+
+            <div class="card pad" style="box-shadow:none; border:1px solid rgba(255,255,255,.08); background:rgba(0,0,0,.18);">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+                <div style="font-weight:900; letter-spacing:.2px; color:rgba(255,255,255,.86);">Por período</div>
+                <div class="chip"><span class="mini-dot" style="background:var(--amber)"></span><span>turnos</span></div>
+              </div>
+              <div class="chart-wrap" style="height:280px; margin-top:10px;">
+                <canvas id="zoneChartPeriods"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="divider" style="margin:14px 0;"></div>
+
+          <div class="card pad" style="box-shadow:none; border:1px solid rgba(255,255,255,.08); background:rgba(0,0,0,.18);">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+              <div style="font-weight:900; letter-spacing:.2px; color:rgba(255,255,255,.86);">Tabela por dia</div>
+              <div class="chip"><span class="mini-dot" style="background:rgba(255,255,255,.35)"></span><span>detalhe</span></div>
+            </div>
+            <div class="table-wrap" style="margin-top:10px; max-height:220px; overflow:auto;">
+              <table class="tbl" id="zoneTable">
+                <thead><tr><th>Data</th><th>Total</th><th>Manhã</th><th>Tarde</th><th>Noite</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <script>
     /* ============================================================
        MOCK + BACKEND-READY CONTRACT (placeholders)
@@ -970,6 +1246,7 @@
     const clamp = (v,min,max)=>Math.max(min,Math.min(max,v));
     const rand = (min,max)=>Math.floor(Math.random()*(max-min+1))+min;
     const pick = (arr)=>arr[Math.floor(Math.random()*arr.length)];
+    
 
     function nowISOAnchor(){
       const d = new Date();
@@ -995,64 +1272,47 @@
         accel3m: 39,
         dropAfterPeak: 44
       },
-      allBands: [
-        { label:"Léo Santana (31/12)", value:292238 },
-        { label:"Luan Santana (31/12)", value:251666 },
-        { label:"Belo (31/12)", value:221948 },
-        { label:"Ivete Sangalo (27/12)", value:177321 },
-        { label:"Alok (27/12)", value:148457 },
-        { label:"Jorge & Mateus (31/12)", value:143166 },
-        { label:"Bell Marques (28/12)", value:101218 },
-        { label:"João Gomes (28/12)", value:91271 },
-        { label:"Simone Mendes (29/12)", value:88059 },
-        { label:"Wesley Safadão (29/12)", value:81657 },
-        { label:"Matue (30/12)", value:80210 },
-        { label:"Gustavo Mioto (30/12)", value:75210 },
-        { label:"Raça Negra (30/12)", value:50210 },
-        { label:"Xand Avião (27/12)", value:70210 },
-        { label:"Baiana System (27/12)", value:67310 },
-        { label:"Manu Batidão (27/12)", value:33210 },
-        { label:"Olodum (28/12)", value:20210 },
-        { label:"Psirico (28/12)", value:63210 }
-      ],
+      allBands: [],
       rankingTop10: [],
       nights: {
         "27/12": [
-          {label:"Baiana System", value:67310},
-          {label:"Alok", value:148457},
-          {label:"Ivete Sangalo", value:177321},
-          {label:"Xand Avião", value:70210},
-          {label:"Manu Batidão", value:33210}
+            { label: "Parangolé", value: 67310 },
+            { label: "Léo Santana", value: 148457 },
+            { label: "Wesley Safadão", value: 177321 },
+            { label: "Xand Avião", value: 70210 },
+            { label: "Léo Foguete", value: 33210 }
         ],
         "28/12": [
-          {label:"Olodum", value:20210},
-          {label:"Psirico", value:63210},
-          {label:"Bell Marques", value:101218},
-          {label:"João Gomes", value:91271},
-          {label:"Thiago Aquino", value:38210}
+            { label: "Edson Gomes", value: 20210 },
+            { label: "Claudia Leitte", value: 63210 },
+            { label: "Simone Mendes", value: 101218 },
+            { label: "Pablo", value: 91271 },
+            { label: "Tony Salles", value: 38210 }
         ],
         "29/12": [
-          {label:"Durval Lélys", value:29110},
-          {label:"Wesley Safadão", value:81657},
-          {label:"Simone Mendes", value:88059},
-          {label:"Claudia Leitte", value:72310},
-          {label:"Tony Salles", value:22110}
+            { label: "Durval Lélys", value: 29110 },
+            { label: "Nattan", value: 81657 },
+            { label: "Natanzinho Lima", value: 88059 },
+            { label: "Matheus e Kauan", value: 72310 },
+            { label: "Psirico", value: 22110 }
         ],
         "30/12": [
-          {label:"Raça Negra", value:39210},
-          {label:"Matue", value:80210},
-          {label:"Gustavo Mioto", value:75210},
-          {label:"Henry Freitas", value:50210},
-          {label:"Timbalada", value:23110}
+            { label: "Olodum", value: 39210 },
+            { label: "Alok", value: 80210 },
+            { label: "Bell Marques", value: 75210 },
+            { label: "Belo", value: 50210 },
+            { label: "Felipe Amorim", value: 23110 }
         ],
         "31/12": [
-          {label:"Léo Santana", value:292238},
-          {label:"Luan Santana", value:251666},
-          {label:"Belo", value:221948},
-          {label:"Jorge & Mateus", value:143166},
-          {label:"Mari Fernandez", value:67310}
+            { label: "Xanddy Harmonia", value: 292238 },
+            { label: "Jorge e Mateus", value: 69310 },
+            { label: "Ivete Sangalo", value: 251666 },
+            { label: "Mari Fernandez", value: 221948 },
+            { label: "Manu Bahtidão", value: 143166 },
+            { label: "Timbalada", value: 67310 }
         ]
-      },
+        },
+
       alerts: [
         { msg:"Pico abrupto de entradas na zona Entrada A (+42% em 10 min).", meta:"cam_Elevador_1 · 12:08", level:"WARN" },
         { msg:"Câmera cam_Mercado_3 com latência acima do padrão (rodada > 5 min).", meta:"Mercado Modelo · 12:06", level:"WARN" },
@@ -1067,6 +1327,109 @@
       camsSaltur: [],
       camsSSP: [],
     };
+
+    // Consolida automaticamente o ranking (todas as noites)
+    // Isso garante que o card “Público por Banda (Todas as noites)” sempre tenha TODAS as bandas.
+    const dayOrder = ["27/12","28/12","29/12","30/12","31/12"];
+
+    state.allBands = dayOrder.flatMap(day =>
+    (state.nights[day] || []).map(x => ({ label: `${x.label} (${day})`, value: x.value }))
+    );
+
+    /* ============================================================
+       EVENT FILTER (Bands main chart)
+       - 25/12: Show Frei Gilson
+       - 26/12: Show Roberto Carlos
+       - 27–31/12: Virada Salvador (todas as bandas)
+       ============================================================ */
+    const DAY_COLORS = {
+      "25/12": "rgba(120,200,255,.82)",  // azul claro (frio)
+      "26/12": "rgba(255,140,120,.82)",  // laranja (morno)
+      "27/12": "rgba(176,107,255,.82)",
+      "28/12": "rgba(227,107,107,.82)",
+      "29/12": "rgba(107,155,255,.82)",
+      "30/12": "rgba(255,204,102,.82)",
+      "31/12": "rgba(46,229,157,.82)"
+    };
+
+    const ALL_BANDS_VIRADA = [...state.allBands];
+
+    const ALL_BANDS_EVENTS = {
+      "25/12": [{ label: "Frei Gilson (25/12)", value: 185000 }],       // placeholder
+      "26/12": [{ label: "Roberto Carlos (26/12)", value: 265000 }],   // placeholder
+      "27-31/12": ALL_BANDS_VIRADA
+    };
+
+    state.selectedBandsEvent = "27-31/12";
+
+    function bandsEventTitle(key){
+      if(key==="25/12") return "25/12 — Show Frei Gilson";
+      if(key==="26/12") return "26/12 — Show Roberto Carlos";
+      return "27–31/12 — Virada Salvador (todas as bandas)";
+    }
+
+    function getSelectedAllBands(){
+      return ALL_BANDS_EVENTS[state.selectedBandsEvent] || ALL_BANDS_VIRADA;
+    }
+
+    function getDayFromLabel(lbl){
+      return lbl.match(/\((\d{2}\/\d{2})\)/)?.[1];
+    }
+
+    function barColorsFromLabels(labels){
+      return labels.map(l => {
+        const day = getDayFromLabel(l);
+        return DAY_COLORS[day] || "rgba(255,255,255,.50)";
+      });
+    }
+
+    function applyBandsEventTitle(){
+      const title = "Público por Banda — " + bandsEventTitle(state.selectedBandsEvent);
+      const t1 = document.getElementById("bandsCardTitle");
+      if(t1) t1.textContent = title;
+      const t2 = document.getElementById("modalBandsTitle");
+      if(t2) t2.textContent = title + " — Detalhes";
+    }
+
+    function updateAllBandsCharts(){
+      const items = [...getSelectedAllBands()];
+      const labels = items.map(x=>x.label);
+      const values = items.map(x=>x.value);
+      const colors = barColorsFromLabels(labels);
+
+      if(charts.allBandsCompact){
+        charts.allBandsCompact.data.labels = labels;
+        charts.allBandsCompact.data.datasets[0].data = values;
+        charts.allBandsCompact.data.datasets[0].backgroundColor = colors;
+        charts.allBandsCompact.update();
+      }
+      if(charts.allBandsFull){
+        charts.allBandsFull.data.labels = labels;
+        charts.allBandsFull.data.datasets[0].data = values;
+        charts.allBandsFull.data.datasets[0].backgroundColor = colors;
+        charts.allBandsFull.update();
+      }
+    }
+
+    function wireBandsFilter(){
+      const sel = document.getElementById("bandsEventFilter");
+      if(!sel) return;
+      sel.value = state.selectedBandsEvent;
+
+      // Evita que clicar no select abra o modal do card
+      ["click","mousedown","touchstart"].forEach(evt => {
+        sel.addEventListener(evt, (e)=> e.stopPropagation());
+      });
+
+      sel.addEventListener("change", ()=>{
+        state.selectedBandsEvent = sel.value;
+        applyBandsEventTitle();
+        updateAllBandsCharts();
+      });
+    }
+
+
+
 
     // Build camera inventories
     function initCameras(){
@@ -1279,105 +1642,30 @@
       });
     }
 
+    // "day" = mantém a ordem definida em state.allBands (ex.: agrupado por dia)
+    // "ranking" = ordena por quantidade (desc)
+    const ALL_BANDS_ORDER_MODE = "day";
+
+    function getAllBandsOrdered(){
+    if (ALL_BANDS_ORDER_MODE === "ranking") {
+        return [...state.allBands].sort((a,b)=>b.value-a.value);
+    }
+    return [...state.allBands]; // preserva a ordem original (por dia)
+    }
+
+
     function createAllBandsCompact(){
       const ctx = document.getElementById("chartAllBandsCompact");
-      const items = [...state.allBands].sort((a,b)=>b.value-a.value);
-      // map cores por dia
-      const dayColors = {
-      "27/12": "rgba(176,107,255,.82)",
-      "28/12": "rgba(227,107,107,.82)",
-      "29/12": "rgba(107,155,255,.82)",
-      "30/12": "rgba(255,204,102,.82)",
-      "31/12": "rgba(46,229,157,.82)"
-      };
-
-      // gera cor automática por label
-      const colors = items.map(i => {
-      const day = i.label.match(/\((\d{2}\/\d{2})\)/)?.[1];
-      return dayColors[day] || "rgba(255,255,255,.50)";
-      });
-
-      return new Chart(ctx,{
-        type:"bar",
-        data:{
-          labels: items.map(x=>x.label),
-          datasets:[{
-            label:"Público",
-            data: items.map(x=>x.value),
-            borderRadius:6,
-            backgroundColor: colors
-
-          }]
-        },
-        options:{
-          ...baseChartOptions(),
-          plugins:{
-            ...baseChartOptions().plugins,
-            tooltip:{ ...baseChartOptions().plugins.tooltip }
-          },
-          scales:{
-            x:{
-              ticks:{ color:"rgba(255,255,255,.70)", maxRotation:60, minRotation:35, autoSkip:false },
-              grid:{ color:"rgba(255,255,255,.06)" }
-            },
-            y:{
-              ticks:{ color:"rgba(255,255,255,.55)", callback:(v)=>v>=1000 ? (v/1000)+"k" : v },
-              grid:{ color:"rgba(255,255,255,.06)" },
-              beginAtZero:true
-            }
-          }
-        }
-      });
+      const items = [...getSelectedAllBands()];
+      // map cores por dia (centralizado em DAY_COLORS)
+      const colors = barColorsFromLabels(items.map(i=>i.label));
     }
 
     function createAllBandsFull(){
       const ctx = document.getElementById("chartAllBandsFull");
-      const items = [...state.allBands].sort((a,b)=>b.value-a.value);
-      // map cores por dia
-      const dayColors = {
-      "27/12": "rgba(176,107,255,.82)",
-      "28/12": "rgba(227,107,107,.82)",
-      "29/12": "rgba(107,155,255,.82)",
-      "30/12": "rgba(255,204,102,.82)",
-      "31/12": "rgba(46,229,157,.82)"
-      };
-
-      // gera cor automática por label
-      const colors = items.map(i => {
-      const day = i.label.match(/\((\d{2}\/\d{2})\)/)?.[1];
-      return dayColors[day] || "rgba(255,255,255,.50)";
-      });
-      return new Chart(ctx,{
-        type:"bar",
-        data:{
-          labels: items.map(x=>x.label),
-          datasets:[{
-            label:"Público",
-            data: items.map(x=>x.value),
-            borderRadius:7,
-            backgroundColor: colors
-
-          }]
-        },
-        options:{
-          ...baseChartOptions(),
-          plugins:{
-            ...baseChartOptions().plugins,
-            legend:{ display:false }
-          },
-          scales:{
-            x:{
-              ticks:{ color:"rgba(255,255,255,.70)", maxRotation:55, minRotation:35, autoSkip:true },
-              grid:{ color:"rgba(255,255,255,.06)" }
-            },
-            y:{
-              ticks:{ color:"rgba(255,255,255,.55)" },
-              grid:{ color:"rgba(255,255,255,.06)" },
-              beginAtZero:true
-            }
-          }
-        }
-      });
+      const items = [...getSelectedAllBands()];
+      // map cores por dia (centralizado em DAY_COLORS)
+      const colors = barColorsFromLabels(items.map(i=>i.label));
     }
 
     function createBigRanking(){
@@ -1490,7 +1778,445 @@
       });
     }
 
-    function initCharts(){
+
+
+    // Dimensão da planta (precisa bater com o viewBox)
+    const MAP_W = 2048;
+    const MAP_H = 1152;
+
+    // Seus setores (16 polígonos). Você pode renomear os ids depois.
+    const HEAT_ZONES = [
+      { id:"Z01", pts:[[1221,551],[1218,422],[1339,311],[1436,402],[1381,455],[1406,480],[1328,551]] },
+      { id:"Z02", pts:[[1331,311],[1212,419],[1132,408],[1165,322],[1248,239]] },
+      { id:"Z03", pts:[[1022,449],[1093,264],[1135,292],[1088,405],[1171,419],[1135,493],[1046,457]] },
+      { id:"Z04", pts:[[1165,142],[1176,187],[1237,242],[1171,311],[1093,258],[1138,134]] },
+      { id:"Z05", pts:[[1060,469],[1221,529],[1207,538],[1140,540],[1129,571],[1041,568]] },
+      { id:"Z06", pts:[[1179,419],[1210,424],[1215,521],[1140,491]] },
+      { id:"Z07", pts:[[905,538],[1038,543],[1030,571],[1121,585],[1118,623],[856,626],[908,574]] },
+      { id:"Z08", pts:[[62,598],[159,585],[308,579],[897,576],[842,632],[322,634],[54,643]] },
+      { id:"Z09", pts:[[1055,469],[1041,538],[908,538],[809,543],[864,391]] },
+      { id:"Z10", pts:[[751,402],[778,358],[856,388],[806,538],[718,482],[632,438],[676,344]] },
+      { id:"Z11", pts:[[541,311],[574,319],[657,372],[626,435],[579,419],[485,405],[444,383],[491,339]] },
+      { id:"Z12", pts:[[577,419],[596,446],[571,491],[480,469],[480,413]] },
+      { id:"Z13", pts:[[308,469],[358,485],[419,452],[472,474],[577,496],[651,524],[574,565],[325,565]] },
+      { id:"Z14", pts:[[306,452],[317,386],[353,410],[430,405],[416,444],[355,482]] },
+      { id:"Z15", pts:[[458,234],[485,228],[510,267],[521,303],[488,339],[438,386],[419,397],[355,402],[319,386],[311,352],[331,303],[375,258],[452,239]] },
+      { id:"Z16", pts:[[361,256],[319,303],[300,347],[311,388],[295,444],[278,397],[264,397],[234,330],[248,289]] },
+      { id:"Z17", pts:[[483,200],[563,167],[588,198],[507,253]] },
+      { id:"Z18", pts:[[1447,408],[1464,399],[1508,444],[1483,466],[1456,441],[1411,474],[1392,452]] },
+      { id:"Z19", pts:[[1472,529],[1519,480],[1530,493],[1585,491],[1621,524]] },
+      { id:"Z20", pts:[[1154,574],[1685,554],[1746,601],[1129,623],[1132,579]] },
+      { id:"Z21", pts:[[1323,203],[1348,184],[1621,444],[1591,466]] }
+    ];
+
+
+
+    function ptsToAttr(pts){
+    return pts.map(p => `${p[0]},${p[1]}`).join(" ");
+    }
+
+    // centróide simples (para label)
+    function polygonCentroid(pts){
+    let x=0,y=0;
+    for (const p of pts){ x+=p[0]; y+=p[1]; }
+    return [x/pts.length, y/pts.length];
+    }
+
+    function fitHeatStage(){
+      const stage = document.getElementById("heatStage");
+      if (!stage) return;
+      stage.setAttribute("transform", "translate(0,0) scale(1)");
+    }
+
+
+
+    function initHeatmap(){
+      const g = document.getElementById("heatPolygons");
+      const gl = document.getElementById("heatLabels");
+      g.innerHTML = "";
+      gl.innerHTML = "";
+
+      for (const z of HEAT_ZONES){
+        const poly = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+        poly.setAttribute("id", `poly_${z.id}`);
+        poly.setAttribute("class", "heat-poly");
+        poly.setAttribute("points", ptsToAttr(z.pts));
+        poly.setAttribute("fill", "rgba(0,0,0,0)");
+        g.appendChild(poly);
+
+        // clique na zona (abre pop-up detalhado)
+        poly.addEventListener("click", (e)=>{
+          e.stopPropagation();
+          if (typeof openZoneModal === "function") openZoneModal(z.id);
+        });
+
+
+        const [cx, cy] = polygonCentroid(z.pts);
+        const t = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        t.setAttribute("class", "heat-label");
+        t.setAttribute("x", cx);
+        t.setAttribute("y", cy);
+        t.setAttribute("text-anchor", "middle");
+        t.textContent = z.id;
+        gl.appendChild(t);
+      }
+
+      // 1) enquadra (remove a “borda” branca do PNG via zoom no stage)
+      fitHeatStage(); // mantém visão geral (sem zoom automático)
+
+
+      // 2) legenda (se você adicionou ZONE_META + renderZonesLegend)
+      if (typeof renderZonesLegend === "function") renderZonesLegend();
+
+      // 3) aplica as cores iniciais
+      if (typeof updateHeatmap === "function") updateHeatmap();
+    }
+
+
+    window.addEventListener("load", initHeatmap);
+
+
+
+    
+    // ============================================================
+    // ZONAS (Mapa de calor) — Meta + câmeras + histórico (placeholders)
+    // ============================================================
+    window.__dashState = window.__dashState || {
+      selectedZone: null,
+      zoneHistCache: {},
+      cam14Flow: [],          // série minuto-a-minuto (simulada) p/ Z08
+      cam14Avg: null
+    };
+
+    // Mapeamento oficial: zona -> câmeras (pronto p/ substituir por consultas SQL)
+    const ZONE_CAMERAS = {
+      Z01: [1, 2, 3],
+      Z02: [4, 5],
+      Z03: [6, 7],
+      Z04: [8, 9],
+      Z05: [10, 11],
+      Z06: [6],
+      Z07: [12, 13],
+      Z08: [14],
+      Z09: [15, 16],
+      Z10: [17, 18],
+      Z11: [19, 20],
+      Z12: [21, 22],
+      Z13: [23, 24],
+      Z14: [25],
+      Z15: [26, 27, 28, 29],
+      Z16: [30],
+      Z17: [31],
+      Z18: [32],
+      Z19: [33],
+      Z20: [34],
+      Z21: [35],
+    };
+
+    // Metadados (títulos/descrições) usados na legenda e no modal
+    const ZONE_META = {
+      Z01: { title:"Z01 — Arena — Frente do palco principal", desc:"Somatório de câmeras: 1, 2, 3." },
+      Z02: { title:"Z02 — Arena — Intermediário", desc:"Somatório de câmeras: 4, 5." },
+      Z03: { title:"Z03 — Praça de alimentação e arquibancada", desc:"Somatório de câmeras: 6, 7." },
+      Z04: { title:"Z04 — Arena — Fundo", desc:"Somatório de câmeras: 8, 9." },
+      Z05: { title:"Z05 — Polícia Civil / GSM", desc:"Somatório de câmeras: 10, 11." },
+      Z06: { title:"Z06 — Roda gigante", desc:"Somatório de câmeras: 6." },
+      Z07: { title:"Z07 — Acesso arena", desc:"Somatório de câmeras: 12, 13." },
+      Z08: { title:"Z08 — Pista — Entrada orla", desc:"Câmera 14. Regra: últimos 5 min vs média histórica (desta câmera)." },
+      Z09: { title:"Z09 — Área verde — Acesso", desc:"Somatório de câmeras: 15, 16." },
+      Z10: { title:"Z10 — Foodtrucks 1", desc:"Somatório de câmeras: 17, 18." },
+      Z11: { title:"Z11 — Foodtrucks 2", desc:"Somatório de câmeras: 19, 20." },
+      Z12: { title:"Z12 — Palco Brisa", desc:"Somatório de câmeras: 21, 22." },
+      Z13: { title:"Z13 — Área verde — Palco Brisa", desc:"Somatório de câmeras: 23, 24." },
+      Z14: { title:"Z14 — Fundo Palco Brisa", desc:"Somatório de câmeras: 25." },
+      Z15: { title:"Z15 — Área verde — Pista de Skate", desc:"Somatório de câmeras: 26, 27, 28, 29." },
+      Z16: { title:"Z16 — Entrada 2 avenida", desc:"Somatório de câmeras: 30." },
+      Z17: { title:"Z17 — Zona morta", desc:"Somatório de câmeras: 31." },
+      Z18: { title:"Z18 — Camarote — Frente do palco principal", desc:"Somatório de câmeras: 32." },
+      Z19: { title:"Z19 — Backstage", desc:"Somatório de câmeras: 33." },
+      Z20: { title:"Z20 — Saída (SSP)", desc:"Somatório de câmeras: 34. (SSP)" },
+      Z21: { title:"Z21 — Acesso Camarote (SSP)", desc:"Somatório de câmeras: 35. (SSP)" },
+    };
+
+    function renderZonesLegend(){
+      const el = document.getElementById("zonesLegend");
+      if (!el) return;
+
+      el.innerHTML = HEAT_ZONES.map(z=>{
+        const m = ZONE_META[z.id] || { title:`${z.id}`, desc:"" };
+        return `
+          <div class="zone-item">
+            <div class="zone-badge">${z.id}</div>
+            <div class="zone-meta">
+              <div class="t">${m.title}</div>
+              <div>${m.desc}</div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    // Valores instantâneos por zona (usados para cor do mapa)
+    const heatValues = Object.fromEntries(Object.keys(ZONE_CAMERAS).map(zid=>[zid, 0]));
+
+    // Período solicitado (placeholders): 12/05/2025 até 31/05/2025
+    const ZONE_PERIOD_START = new Date(2025, 4, 12); // 12/05/2025
+    const ZONE_PERIOD_END   = new Date(2025, 4, 31); // 31/05/2025
+
+    function pad2(n){ return String(n).padStart(2,"0"); }
+    function fmtBR(d){ return `${pad2(d.getDate())}/${pad2(d.getMonth()+1)}`; }
+    function fmtBRFull(d){ return `${pad2(d.getDate())}/${pad2(d.getMonth()+1)}/${d.getFullYear()}`; }
+
+    function dateRange(start, end){
+      const out=[];
+      const d = new Date(start.getTime());
+      d.setHours(0,0,0,0);
+      const e = new Date(end.getTime());
+      e.setHours(0,0,0,0);
+      while(d<=e){
+        out.push(new Date(d.getTime()));
+        d.setDate(d.getDate()+1);
+      }
+      return out;
+    }
+
+    // RNG determinístico (para manter o demo estável entre refresh)
+    function seededRand(seedStr){
+      let h = 2166136261;
+      for(let i=0;i<seedStr.length;i++){ h ^= seedStr.charCodeAt(i); h = Math.imul(h, 16777619); }
+      return function(){
+        // xorshift
+        h ^= h << 13; h ^= h >>> 17; h ^= h << 5;
+        return ((h >>> 0) / 4294967295);
+      };
+    }
+
+    function getZoneHistory(zid){
+      if(window.__dashState.zoneHistCache[zid]) return window.__dashState.zoneHistCache[zid];
+
+      const days = dateRange(ZONE_PERIOD_START, ZONE_PERIOD_END);
+      const rnd = seededRand("ZONE_"+zid+"_2025");
+
+      // Perfil de volume por zona (apenas para demo visual; substituir por SQL)
+      const profile = {
+        hi: ["Z01","Z02","Z04","Z18"],
+        mid: ["Z03","Z07","Z08","Z12","Z20","Z21"],
+        lo: ["Z05","Z06","Z09","Z10","Z11","Z13","Z14","Z15","Z16","Z17","Z19"]
+      };
+      const band = profile.hi.includes(zid) ? [18000, 46000]
+                 : profile.mid.includes(zid) ? [9000, 26000]
+                 : [2500, 12000];
+
+      const rows = days.map((d, i)=>{
+        // leve tendência + sazonalidade
+        const t = i/(days.length-1 || 1);
+        const seasonal = 0.78 + 0.44*Math.sin((i/3.2)+rnd()*0.9);
+        const base = band[0] + (band[1]-band[0])*(0.25 + 0.55*t);
+        let total = Math.round(base * seasonal * (0.85 + rnd()*0.35));
+
+        // Ajuste especial p/ Z08 (fluxo) — fica mais “nervoso”
+        if(zid==="Z08") total = Math.round(total * (0.75 + rnd()*0.70));
+
+        // Split por período (manhã/tarde/noite)
+        const pM = 0.22 + rnd()*0.10;
+        const pT = 0.28 + rnd()*0.10;
+        const pN = Math.max(0.40, 1 - (pM+pT));
+        const m = Math.round(total * pM);
+        const t2 = Math.round(total * pT);
+        const n = Math.max(0, total - (m+t2));
+
+        return {
+          date: d,
+          total,
+          morning: m,
+          afternoon: t2,
+          night: n
+        };
+      });
+
+      window.__dashState.zoneHistCache[zid] = rows;
+      return rows;
+    }
+
+    // Cor do mapa (frio -> quente)
+    const HEAT_T1 = 12000;   // início de atenção
+    const HEAT_T2 = 22000;   // alto
+    const HEAT_T3 = 35000;   // crítico
+
+    function heatColor(v){
+      if (v >= HEAT_T3) return "rgba(145, 0, 55, 0.55)";     // vinho
+      if (v >= HEAT_T2) return "rgba(255, 70, 120, 0.48)";   // vermelho
+      if (v >= HEAT_T1) return "rgba(255, 170, 0, 0.42)";    // laranja
+      if (v > 0)        return "rgba(87, 164, 255, 0.22)";   // azul frio
+      return "rgba(0,0,0,0)";
+    }
+
+    function updateZoneHeatValues(){
+      // Base: usa o último dia do período como “referência”, + ruído minuto-a-minuto
+      for(const zid of Object.keys(ZONE_CAMERAS)){
+        const hist = getZoneHistory(zid);
+        const base = hist[hist.length-1]?.total || 0;
+
+        // ruído suave
+        const v = Math.max(0, Math.round(base * (0.86 + Math.random()*0.28)));
+
+        // Z08: regra de fluxo (últimos 5 min vs média)
+        if(zid==="Z08"){
+          // simula fluxo da câmera 14 (por minuto)
+          const flow = Math.round(420 + Math.random()*860); // pessoas/min (placeholder)
+          const series = window.__dashState.cam14Flow;
+          series.push(flow);
+          while(series.length > 90) series.shift();
+
+          const avg = series.reduce((a,b)=>a+b,0) / (series.length || 1);
+          const last5 = series.slice(-5).reduce((a,b)=>a+b,0) / (Math.min(5, series.length) || 1);
+
+          window.__dashState.cam14Avg = avg;
+
+          // se últimos 5 min > média => quente
+          const hot = last5 > (avg * 1.12);
+          // transforma em “valor” para cor (hot => puxa para cima)
+          heatValues[zid] = hot ? Math.round(HEAT_T2 + (last5*18)) : Math.round(HEAT_T1 * 0.65 + (last5*10));
+          heatValues[zid] = clamp(heatValues[zid], 0, 65000);
+        } else {
+          heatValues[zid] = clamp(v, 0, 65000);
+        }
+      }
+    }
+
+    function applySelectedZoneStyles(zid){
+      // SVG
+      document.querySelectorAll(".heat-poly").forEach(p=>p.classList.remove("active"));
+      const poly = document.getElementById(`poly_${zid}`);
+      if(poly) poly.classList.add("active");
+
+      // Legend
+      const legend = document.getElementById("zonesLegend");
+      if(legend){
+        legend.querySelectorAll(".zone-item").forEach(i=>i.classList.remove("active"));
+        const it = legend.querySelector(`[data-zone="${zid}"]`);
+        if(it) it.classList.add("active");
+      }
+    }
+
+    function ensureZoneModalCharts(){
+      if(charts.zoneDaily && charts.zonePeriods) return;
+
+      // Daily line
+      const ctxD = document.getElementById("zoneChartDaily");
+      charts.zoneDaily = new Chart(ctxD, {
+        type:"line",
+        data:{ labels:[], datasets:[{ data:[], borderColor:"rgba(87,164,255,1)", backgroundColor:"rgba(87,164,255,.12)", tension:.35, fill:false, pointRadius:0 }] },
+        options:{
+          responsive:true, maintainAspectRatio:false,
+          plugins:{ legend:{display:false}, tooltip:{enabled:true} },
+          scales:{
+            x:{ ticks:{ color:"rgba(255,255,255,.55)", maxRotation:0, autoSkip:true }, grid:{ color:"rgba(255,255,255,.06)" } },
+            y:{ ticks:{ color:"rgba(255,255,255,.55)" }, grid:{ color:"rgba(255,255,255,.06)" } }
+          }
+        }
+      });
+
+      // Periods bar
+      const ctxP = document.getElementById("zoneChartPeriods");
+      charts.zonePeriods = new Chart(ctxP, {
+        type:"bar",
+        data:{ labels:["Manhã","Tarde","Noite"], datasets:[{ data:[0,0,0], backgroundColor:["rgba(87,164,255,.35)","rgba(255,170,0,.35)","rgba(255,70,120,.35)"], borderColor:"rgba(255,255,255,.12)", borderWidth:1, borderRadius:10 }] },
+        options:{
+          responsive:true, maintainAspectRatio:false,
+          plugins:{ legend:{display:false}, tooltip:{enabled:true} },
+          scales:{
+            x:{ ticks:{ color:"rgba(255,255,255,.55)" }, grid:{ display:false } },
+            y:{ ticks:{ color:"rgba(255,255,255,.55)" }, grid:{ color:"rgba(255,255,255,.06)" } }
+          }
+        }
+      });
+    }
+
+    function openZoneModal(zid){
+      const meta = ZONE_META[zid] || { title:zid, desc:"" };
+      window.__dashState.selectedZone = zid;
+
+      applySelectedZoneStyles(zid);
+
+      // Cabeçalho
+      document.getElementById("zoneModalTitle").textContent = meta.title;
+      document.getElementById("zoneModalSub").textContent = meta.desc;
+
+      // Dados
+      const rows = getZoneHistory(zid);
+      const labels = rows.map(r=>fmtBR(r.date));
+      const totals = rows.map(r=>r.total);
+
+      const totalPeriod = totals.reduce((a,b)=>a+b,0);
+      const avgDay = Math.round(totalPeriod / (totals.length || 1));
+      let peak = -1, peakIdx = 0;
+      totals.forEach((v,i)=>{ if(v>peak){ peak=v; peakIdx=i; } });
+
+      const sumMorning = rows.reduce((a,r)=>a+r.morning,0);
+      const sumAfternoon = rows.reduce((a,r)=>a+r.afternoon,0);
+      const sumNight = rows.reduce((a,r)=>a+r.night,0);
+
+      // KPIs
+      document.getElementById("zoneKpiTotal").textContent = totalPeriod.toLocaleString("pt-BR");
+      document.getElementById("zoneKpiAvg").textContent = avgDay.toLocaleString("pt-BR");
+      document.getElementById("zoneKpiPeak").textContent = peak.toLocaleString("pt-BR");
+      document.getElementById("zoneKpiPeakSub").textContent = `Dia: ${labels[peakIdx]} (${fmtBRFull(rows[peakIdx].date)})`;
+
+      // Status (especial Z08)
+      let status = "NORMAL";
+      if(zid==="Z08"){
+        const series = window.__dashState.cam14Flow;
+        const avg = window.__dashState.cam14Avg || 0;
+        const last5 = series.slice(-5).reduce((a,b)=>a+b,0) / (Math.min(5, series.length) || 1);
+        status = (last5 > avg*1.12) ? "QUENTE" : "FRIO";
+      } else {
+        status = (heatValues[zid] >= HEAT_T2) ? "QUENTE" : (heatValues[zid] >= HEAT_T1 ? "ATENÇÃO" : "NORMAL");
+      }
+      document.getElementById("zoneKpiStatus").textContent = status;
+
+      // Charts
+      ensureZoneModalCharts();
+      charts.zoneDaily.data.labels = labels;
+      charts.zoneDaily.data.datasets[0].data = totals;
+      charts.zoneDaily.update("none");
+
+      charts.zonePeriods.data.datasets[0].data = [sumMorning, sumAfternoon, sumNight];
+      charts.zonePeriods.update("none");
+
+      // Table
+      const tbody = document.querySelector("#zoneTable tbody");
+      tbody.innerHTML = rows.map(r=>`
+        <tr>
+          <td>${fmtBRFull(r.date)}</td>
+          <td class="mono">${r.total.toLocaleString("pt-BR")}</td>
+          <td class="mono">${r.morning.toLocaleString("pt-BR")}</td>
+          <td class="mono">${r.afternoon.toLocaleString("pt-BR")}</td>
+          <td class="mono">${r.night.toLocaleString("pt-BR")}</td>
+        </tr>
+      `).join("");
+
+      openModal("modalZone");
+    }
+function updateHeatmap(){
+      for(const z of HEAT_ZONES){
+        const v = heatValues[z.id] || 0;
+        const poly = document.getElementById(`poly_${z.id}`);
+        if(!poly) continue;
+
+        const fill = heatColor(v);
+        poly.setAttribute("fill", fill);
+        poly.setAttribute("data-value", String(v));
+
+        // swatch na legenda
+        const sw = document.getElementById(`swatch_${z.id}`);
+        if(sw){
+          sw.style.background = (v>0) ? fill.replace(/,\s*0\.\d+\)$/, ", 0.85)") : "rgba(255,255,255,0.10)";
+        }
+      }
+    }
+
+function initCharts(){
       // Sparklines
       charts.sp_now    = createSpark("sp_now",    "rgba(87,164,255,1)");
       charts.sp_peak   = createSpark("sp_peak",   "rgba(40,226,165,1)");
@@ -1535,6 +2261,10 @@
       const d = new Date();
       document.getElementById("clock").textContent = d.toLocaleTimeString("pt-BR");
       document.getElementById("anchorTs").textContent = nowISOAnchor();
+
+      // MAPA DE CALOR
+      updateZoneHeatValues();
+      updateHeatmap();
 
       // KPI drift
       const drift = () => (Math.random()<.5?-1:1) * rand(200, 1400);
@@ -1626,30 +2356,16 @@
       updateSpark(charts.sp_alerts, clamp(state.kpis.alertsActive*20 + rand(0,10), 0, 160));
       updateSpark(charts.sp_status, state.kpis.status==="OK" ? rand(95,120) : rand(40,75));
 
-      const items = [...state.allBands].sort((a,b)=>b.value-a.value);
-
-        // cores por dia (mesma regra do “full”)
-        const dayColors = {
-        "27/12": "rgba(176,107,255,.82)",
-        "28/12": "rgba(227,107,107,.82)",
-        "29/12": "rgba(107,155,255,.82)",
-        "30/12": "rgba(255,204,102,.82)",
-        "31/12": "rgba(46,229,157,.82)"
-        };
-
-        updateBarData(
+      const items = [...getSelectedAllBands()];
+updateBarData(
         charts.allBandsCompact,
         items.map(x=>x.label),
         items.map(x=>x.value)
         );
 
         // IMPORTANTÍSSIMO: atualizar as cores junto com labels/data
-        charts.allBandsCompact.data.datasets[0].backgroundColor = items.map(i => {
-        const day = i.label.match(/\((\d{2}\/\d{2})\)/)?.[1];
-        return dayColors[day] || "rgba(255,255,255,.45)";
-        });
-
-        charts.allBandsCompact.update("none");
+        charts.allBandsCompact.data.datasets[0].backgroundColor = barColorsFromLabels(items.map(x=>x.label));
+charts.allBandsCompact.update("none");
 
 
       // big ranking top10
@@ -1665,7 +2381,7 @@
 
       // If full modal chart exists, update too
       if(charts.allBandsFull){
-        const items = [...state.allBands].sort((a,b)=>b.value-a.value);
+        const items = [...state.allBands];
         updateBarData(charts.allBandsFull, items.map(x=>x.label), items.map(x=>x.value));
       }
     }
@@ -1683,10 +2399,13 @@
     function wireModals(){
       document.getElementById("openBandsModal").addEventListener("click", ()=>{
         openModal("modalBands");
+        applyBandsEventTitle();
         // create full chart if first time
         if(!charts.allBandsFull){
           charts.allBandsFull = createAllBandsFull();
         }
+        // garante que compact/full reflitam o filtro atual
+        updateAllBandsCharts();
       });
 
       document.getElementById("openAlertsModal").addEventListener("click", ()=>{
@@ -1776,6 +2495,8 @@
       renderCameras();
 
       initCharts();
+      applyBandsEventTitle();
+      wireBandsFilter();
       wireModals();
 
       // initial timestamps
