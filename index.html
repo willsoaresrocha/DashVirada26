@@ -487,7 +487,7 @@
       padding:10px 10px;
     }
     .cam .snap .camname{
-      font-size:12px;
+      font-size:17px;
       font-weight:900;
       color:rgba(255,255,255,.88);
     }
@@ -507,7 +507,7 @@
       padding:10px 10px 12px;
       display:grid;
       gap:6px;
-      font-size:11px;
+      font-size:15.5px;
       color:rgba(255,255,255,.70);
     }
     .cam .body .row{
@@ -705,6 +705,17 @@
       }
       .cameras-grid{ grid-template-columns:repeat(3, minmax(200px, 1fr)); }
     }
+
+
+    
+    /* ===== SSP MODE: esconder blocos não usados ===== */
+    
+    
+    
+    #camerasSSP
+    {
+      display: none !important;
+    }
   </style>
 </head>
 
@@ -713,7 +724,7 @@
   <div class="header">
     <div class="header-inner">
       <div class="brand">
-        <h1>Virada Salvador 2026 — Megan Inteligência Artificial - Hive Computer Vision</h1>
+        <h1>Virada Salvador 2026 — SALTUR — Megan Inteligência Artificial - Hive Computer Vision</h1>
         <div class="sub">Dashboard em tempo real · atualização automática</div>
       </div>
       <div class="header-right">
@@ -733,7 +744,7 @@
           <div>
             <div class="k-label">Pessoas presentes agora</div>
             <div class="k-value mono" id="k_now">--</div>
-            <div class="k-sub">Estimativa em tempo real (todas as zonas).</div>
+            <div class="k-sub">Total de presentes no momento atual</div>
           </div>
           <div class="k-status"><span class="sig"></span><span>AO VIVO</span></div>
         </div>
@@ -743,11 +754,11 @@
       <div class="card kpi green">
         <div class="k-top">
           <div>
-            <div class="k-label">Pico da noite</div>
+            <div class="k-label">Total de entradas hoje</div>
             <div class="k-value mono" id="k_peak">--</div>
-            <div class="k-sub">Maior valor observado (noite atual).</div>
+            <div class="k-sub">Soma de público consolidado (noite atual)</div>
           </div>
-          <div class="k-status"><span class="sig"></span><span>PEAK</span></div>
+          <div class="k-status"><span class="sig"></span><span>HOJE</span></div>
         </div>
         <div class="spark"><canvas id="sp_peak"></canvas></div>
       </div>
@@ -755,11 +766,11 @@
       <div class="card kpi">
         <div class="k-top">
           <div>
-            <div class="k-label">Total acumulado</div>
+            <div class="k-label">Pico da noite</div>
             <div class="k-value mono" id="k_total">--</div>
-            <div class="k-sub">Soma de público consolidado (evento).</div>
+            <div class="k-sub">Maior valor observado (noite atual)</div>
           </div>
-          <div class="k-status"><span class="sig"></span><span>ACUM</span></div>
+          <div class="k-status"><span class="sig"></span><span>MAX</span></div>
         </div>
         <div class="spark"><canvas id="sp_total"></canvas></div>
       </div>
@@ -767,11 +778,11 @@
       <div class="card kpi amber">
         <div class="k-top">
           <div>
-            <div class="k-label">Alertas ativos</div>
+            <div class="k-label">Total de entradas acumuladas</div>
             <div class="k-value mono" id="k_alerts">--</div>
-            <div class="k-sub">Lista operacional (janela recente).</div>
+            <div class="k-sub">Soma de público consolidado (todas as noites)</div>
           </div>
-          <div class="k-status"><span class="sig"></span><span>ALERTA</span></div>
+          <div class="k-status"><span class="sig"></span><span>TOTAL GERAL</span></div>
         </div>
         <div class="spark"><canvas id="sp_alerts"></canvas></div>
       </div>
@@ -779,11 +790,11 @@
       <div class="card kpi pink">
         <div class="k-top">
           <div>
-            <div class="k-label">Status geral</div>
+            <div class="k-label">Alertas ativos</div>
             <div class="k-value" id="k_status">OK</div>
-            <div class="k-sub">Telemetria e consistência.</div>
+            <div class="k-sub">Análise inteligente de todos os setores</div>
           </div>
-          <div class="k-status"><span class="sig"></span><span>HEALTH</span></div>
+          <div class="k-status"><span class="sig"></span><span>ALERTA</span></div>
         </div>
         <div class="spark"><canvas id="sp_status"></canvas></div>
       </div>
@@ -796,15 +807,14 @@
       <div class="card pad clickable" id="openBandsModal">
         <div class="card-title">
           <div>
-            <h2 id="bandsCardTitle">Público por Banda — 27–31/12 — Virada Salvador (todas as bandas)</h2>
-            <div class="hint">Comparativo consolidado (dados fictícios realistas).</div>
+            <h2 id="bandsCardTitle">Público por Banda — 27/12/2025 a 31/12/2025 — Virada Salvador (todas as bandas)</h2>
+            <div class="hint">Comparativo consolidado.</div>
           </div>
           <div class="title-actions">
             <div class="select-wrap">
               <select id="bandsEventFilter" class="select" aria-label="Filtrar evento do gráfico de público por banda">
-                <option value="25/12">25/12 — Show Frei Gilson</option>
-                <option value="26/12">26/12 — Show Roberto Carlos</option>
-                <option value="27-31/12" selected>27–31/12 — Virada Salvador (todas as bandas)</option>
+                
+                <option value="27-31/12" selected>27 a 31/12 — Virada Salvador (todas as bandas)</option>
               </select>
             </div>
             <div class="chip rank"><span class="mini-dot"></span><span>ranking</span></div>
@@ -820,7 +830,7 @@
         <div class="alerts">
           <div class="section-h">
             <h3>ALERTAS OPERACIONAIS</h3>
-            <div class="badge-rt"><span class="mini-dot"></span>tempo real (simulado)</div>
+            <div class="badge-rt"><span class="mini-dot"></span>tempo real</div>
           </div>
 
           <div id="alertsList">
@@ -854,17 +864,17 @@
     </div>
 
     <!-- Ranking dos Maiores Públicos (replaces "fluxo agregado") -->
-    <div class="card pad">
+    <div id="rankingPublicos" class="card pad">
       <div class="rank-title">
         <h2>Ranking dos Maiores Públicos</h2>
-        <div class="ranking-sub">Ranking dos 10 Maiores Públicos de 2024 (fictício)</div>
+        <div class="ranking-sub">Ranking dos 10 Maiores Públicos </div>
       </div>
       <div class="chart-wrap chart-tall" style="margin-top:8px;">
         <canvas id="chartBigRanking"></canvas>
       </div>
     </div>
 
-    <section class="card pad" id="cardHeatmap">
+    <section id="mapaCalor" class="card pad" id="cardHeatmap">
       <div class="card-title">
         <div>
           <h3>Mapa de calor por setor</h3>
@@ -899,48 +909,7 @@
 
 
 
-    <!-- 5 nights in one line (telão) -->
-    <div class="night-row">
-      <div class="card pad night-card">
-        <div class="night-h">
-          <h3>Público por Banda — Noite 27/12</h3>
-          <div class="chip"><span class="mini-dot" style="background:#b06bff"></span><span>27/12</span></div>
-        </div>
-        <div class="chart-wrap chart-mini"><canvas id="night_27"></canvas></div>
-      </div>
 
-      <div class="card pad night-card">
-        <div class="night-h">
-          <h3>Público por Banda — Noite 28/12</h3>
-          <div class="chip"><span class="mini-dot" style="background:#e36b6b"></span><span>28/12</span></div>
-        </div>
-        <div class="chart-wrap chart-mini"><canvas id="night_28"></canvas></div>
-      </div>
-
-      <div class="card pad night-card">
-        <div class="night-h">
-          <h3>Público por Banda — Noite 29/12</h3>
-          <div class="chip"><span class="mini-dot" style="background:#6b9bff"></span><span>29/12</span></div>
-        </div>
-        <div class="chart-wrap chart-mini"><canvas id="night_29"></canvas></div>
-      </div>
-
-      <div class="card pad night-card">
-        <div class="night-h">
-          <h3>Público por Banda — Noite 30/12</h3>
-          <div class="chip"><span class="mini-dot" style="background:#ffcc66"></span><span>30/12</span></div>
-        </div>
-        <div class="chart-wrap chart-mini"><canvas id="night_30"></canvas></div>
-      </div>
-
-      <div class="card pad night-card">
-        <div class="night-h">
-          <h3>Público por Banda — Noite 31/12</h3>
-          <div class="chip"><span class="mini-dot" style="background:#2ee59d"></span><span>31/12</span></div>
-        </div>
-        <div class="chart-wrap chart-mini"><canvas id="night_31"></canvas></div>
-      </div>
-    </div>
 
     <!-- Smart + Heatmap -->
     <div class="smart-grid">
@@ -955,11 +924,11 @@
 
         <div class="smart-item">
           <div>Zona com pressão atípica</div>
-          <div class="v" id="z_pressure" style="color:var(--warn)">Rua Chile</div>
+          <div class="v" id="z_pressure" style="color:var(--warn)">Entrada Orla</div>
         </div>
         <div class="smart-item">
-          <div>Câmera zerada com evento ativo</div>
-          <div class="v" id="z_zero" style="color:var(--bad)">Câmera 28</div>
+          <div>Câmera zerada com evento ativo!</div>
+          <div class="v" id="z_zero" style="color:var(--bad)">--</div>
         </div>
         <div class="smart-item">
           <div>Aceleração repentina (3 min)</div>
@@ -971,20 +940,40 @@
         </div>
       </div>
 
-      <div class="card pad">
+      <div class="card pad" id="predCard">
         <div class="card-title">
           <div>
-            <h3>Mapa de calor por zona</h3>
-            <div class="hint">Placeholder visual (densidade por zona).</div>
+            <h3>Inteligência Preditiva</h3>
+            <div class="hint">Análise da IA Megan com base nos dados consolidados do dashboard.</div>
           </div>
-          <div class="chip warn"><span class="mini-dot"></span><span>densidade</span></div>
+          <div class="chip rank"><span class="mini-dot"></span><span>IA</span></div>
         </div>
-        <div class="heatmap">HEATMAP · ZONAS · DENSIDADE</div>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:10px 0 12px;">
+          <div class="pill-state warn" id="pred_status">CARREGANDO</div>
+          <div class="chip" id="pred_conf" style="opacity:.9;"><span class="mini-dot" style="background:var(--blue)"></span><span>Confiança: --</span></div>
+          <div class="chip" id="pred_time" style="opacity:.9;"><span class="mini-dot" style="background:rgba(255,255,255,.35)"></span><span>Atualizado: --</span></div>
+        </div>
+
+        <div class="hint" id="pred_line" style="font-size:13px; line-height:1.45; color:rgba(255,255,255,.85);">
+          Carregando análise preditiva...
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px;">
+          <div class="card" style="padding:12px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06);">
+            <div style="font-weight:900; letter-spacing:.08em; font-size:11px; color:rgba(255,255,255,.7); margin-bottom:8px;">RISCOS (PRÓX. 60 MIN)</div>
+            <ul id="pred_risks" style="margin:0; padding-left:18px; color:rgba(255,255,255,.9);"></ul>
+          </div>
+          <div class="card" style="padding:12px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06);">
+            <div style="font-weight:900; letter-spacing:.08em; font-size:11px; color:rgba(255,255,255,.7); margin-bottom:8px;">AÇÕES RECOMENDADAS</div>
+            <ul id="pred_actions" style="margin:0; padding-left:18px; color:rgba(255,255,255,.9);"></ul>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- Cameras SALTUR -->
-    <div class="card pad">
+    <div  class="card pad">
       <div class="card-title">
         <div>
           <h3>Câmeras SALTUR (40)</h3>
@@ -996,7 +985,7 @@
     </div>
 
     <!-- Cameras SSP -->
-    <div class="card pad">
+    <div  id="camerasSSP" class="card pad">
       <div class="card-title">
         <div>
           <h3>Câmeras SSP (8)</h3>
@@ -1013,7 +1002,7 @@
   <div class="modal" id="modalBands">
     <div class="modal-panel">
       <div class="modal-head">
-        <h3 id="modalBandsTitle">Público por Banda — 27–31/12 — Virada Salvador (todas as bandas) — Detalhes</h3>
+        <h3 id="modalBandsTitle">Público por Banda — 27/12/2025 a 31/12/2025 — Virada Salvador (todas as bandas) — Detalhes</h3>
         <button class="modal-close" data-close="modalBands">Fechar</button>
       </div>
       <div class="modal-body">
@@ -1044,7 +1033,7 @@
         <div class="card pad" style="box-shadow:none;">
           <div class="section-h" style="margin-bottom:10px;">
             <h3 style="margin:0;">ALERTAS OPERACIONAIS</h3>
-            <div class="badge-rt"><span class="mini-dot"></span>tempo real (simulado)</div>
+            <div class="badge-rt"><span class="mini-dot"></span>tempo real</div>
           </div>
 
           <div id="alertsListFull"></div>
@@ -1115,13 +1104,18 @@
 
           <div class="card pad" style="box-shadow:none; border-radius:14px; border:1px solid rgba(255,255,255,.08); background:rgba(0,0,0,.18);">
             <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
-              <div style="font-weight:900; letter-spacing:.2px; color:rgba(255,255,255,.86);">Histórico (últimos 30 min)</div>
+              <div id="camModalHistTitle" style="font-weight:900; letter-spacing:.2px; color:rgba(255,255,255,.86);">Histórico completo (XLS)</div>
               <div class="chip"><span class="mini-dot" style="background:var(--blue)"></span><span>timeline</span></div>
             </div>
             <div class="chart-wrap" style="height:260px; margin-top:10px;">
               <canvas id="camModalChart"></canvas>
             </div>
           </div>
+
+          <div class="divider" style="margin:14px 0;"></div>
+
+          <div style="font-weight:900; margin-bottom:10px; letter-spacing:.2px; color:rgba(255,255,255,.86);">Histórico completo (lista)</div>
+          <div id="camModalHistory"></div>
 
           <div class="divider" style="margin:14px 0;"></div>
 
@@ -1148,7 +1142,8 @@
           <div class="card-title">
             <div>
               <h3>Resumo operacional</h3>
-              <div class="hint">Período: 12/05/2025 até 31/05/2025 (placeholders — pronto para plugar no banco).</div>
+              <div class="hint">Período: 27/12 (18:00) até 28/12 (05:00) — estimativa por zona (meia em meia hora).</div>
+
             </div>
             <div class="chip rank"><span class="mini-dot"></span><span>zona</span></div>
           </div>
@@ -1209,9 +1204,10 @@
             </div>
             <div class="table-wrap" style="margin-top:10px; max-height:220px; overflow:auto;">
               <table class="tbl" id="zoneTable">
-                <thead><tr><th>Data</th><th>Total</th><th>Manhã</th><th>Tarde</th><th>Noite</th></tr></thead>
+                <thead><tr><th>Horário</th><th>Total (estimado)</th></tr></thead>
                 <tbody></tbody>
               </table>
+
             </div>
           </div>
 
@@ -1226,7 +1222,7 @@
        MOCK + BACKEND-READY CONTRACT (placeholders)
        ============================================================ */
     const API = {
-      baseUrl: "http://localhost:8000",  // <- backend novo da virada (futuro)
+      baseUrl: "" ,  // <- backend novo da virada (futuro)
       endpoints: {
         kpis: "/api/virada/kpis",
         ranking: "/api/virada/ranking_publicos",
@@ -1238,6 +1234,92 @@
         camera_detail: (id) => `/api/virada/camera/${encodeURIComponent(id)}`
       }
     };
+// ========================= BACKEND / AUTH =========================
+const BACKEND = {
+  enabled: true,
+  token: localStorage.getItem("virada_token") || null,
+  user: null
+};
+
+async function apiFetch(path, opts = {}) {
+  const url = (API.baseUrl || "") + path;
+  const headers = Object.assign(
+    { "Content-Type": "application/json" },
+    opts.headers || {}
+  );
+  if (BACKEND.token) headers["Authorization"] = "Bearer " + BACKEND.token;
+
+  const res = await fetch(url, {
+    method: opts.method || "GET",
+    headers,
+    body: opts.body ? JSON.stringify(opts.body) : undefined
+  });
+
+  // token expirada / inválida
+  if (res.status === 401) {
+    BACKEND.token = null;
+    localStorage.removeItem("virada_token");
+    showAuthOverlay(true);
+    throw new Error("401 - não autenticado");
+  }
+
+  const ct = res.headers.get("content-type") || "";
+  if (ct.includes("application/json")) return await res.json();
+  const txt = await res.text();
+  return { ok: res.ok, text: txt };
+}
+
+function showAuthOverlay(force = false) {
+  const el = document.getElementById("authOverlay");
+  if (!el) return;
+  if (!BACKEND.enabled) { el.style.display = "none"; return; }
+  if (force || !BACKEND.token) {
+    el.style.display = "flex";
+  } else {
+    el.style.display = "none";
+  }
+}
+
+async function doLogin(username, password) {
+  const out = await apiFetch("/api/auth/login", { method: "POST", body: { username, password } });
+  if (!out || !out.token) throw new Error("login inválido");
+  BACKEND.token = out.token;
+  localStorage.setItem("virada_token", out.token);
+  showAuthOverlay(false);
+  return out;
+}
+
+async function pullBackend() {
+  // Você pode ampliar isso depois para puxar mais dados (banco real por banda etc.)
+  const [k, a, t, z] = await Promise.allSettled([
+    apiFetch("/api/virada/kpis"),
+    apiFetch("/api/virada/alertas"),
+    apiFetch("/api/virada/top_cameras"),
+    apiFetch("/api/virada/zones/current")
+  ]);
+
+  if (k.status === "fulfilled" && k.value) {
+    state.kpis = Object.assign({}, state.kpis, k.value);
+  }
+  if (a.status === "fulfilled" && a.value) {
+    const items = a.value.items || a.value.alerts || [];
+    state.alerts = Array.isArray(items) ? items : [];
+    state.kpis.alertsActive = state.alerts.filter(x => (x.level || x.severity) !== "info").length;
+  }
+  if (t.status === "fulfilled" && t.value) {
+    const rows = t.value.rows || t.value.top || t.value.data || [];
+    state.topCams15 = Array.isArray(rows) ? rows : state.topCams15;
+  }
+  if (z.status === "fulfilled" && z.value) {
+    if (z.value.heatValues && typeof z.value.heatValues === "object") {
+      // heatValues é lido pela updateHeatmap()
+      heatValues = z.value.heatValues;
+      updateHeatmap();
+    }
+  }
+}
+// ======================= / BACKEND / AUTH =========================
+
 
     /* ============================================================
        UTIL
@@ -1265,64 +1347,62 @@
         alertsActive: 2,
         status: "OK"
       },
-      zones: ["Pelourinho","Elevador Lacerda","Rua Chile","Taboão","Orla","Mercado Modelo","Praça Municipal","Ladeira da Praça"],
+      zones: ["ENTRADA ORLA 1","ENTRADA ORLA 2","ENTRADA AVENIDA 1","ENTRADA AVENIDA 2","ENTRADA CAMAROTE 1","ENTRADA CAMAROTE 2","SAÍDA"],
       smart: {
-        pressureZone: "Rua Chile",
-        zeroCam: "Câmera 28",
-        accel3m: 39,
-        dropAfterPeak: 44
+        pressureZone: "Entrada Orla",
+        zeroCam: "--",
+        accel3m: 3,
+        dropAfterPeak: 0
       },
       allBands: [],
       rankingTop10: [],
       nights: {
         "27/12": [
-            { label: "Parangolé", value: 67310 },
-            { label: "Léo Santana", value: 148457 },
-            { label: "Wesley Safadão", value: 177321 },
-            { label: "Xand Avião", value: 70210 },
-            { label: "Léo Foguete", value: 33210 }
+            { label: "Léo Foguete", value: 48361 },
+            { label: "Léo Santana", value: 71118 },
+            { label: "Wesley Safadão", value: 84001 },
+            { label: "Xand Avião", value: 81935 },
+            { label: "Parangolé", value: 26119 }
         ],
         "28/12": [
-            { label: "Edson Gomes", value: 20210 },
-            { label: "Claudia Leitte", value: 63210 },
-            { label: "Simone Mendes", value: 101218 },
-            { label: "Pablo", value: 91271 },
-            { label: "Tony Salles", value: 38210 }
+            { label: "Edson Gomes", value: 48111 },
+            { label: "Claudia Leitte", value: 83761 },
+            { label: "Simone Mendes", value: 89147 },
+            { label: "Pablo", value: 79357 },
+            { label: "Tony Salles", value: 49184 }
         ],
         "29/12": [
-            { label: "Durval Lélys", value: 29110 },
-            { label: "Nattan", value: 81657 },
-            { label: "Natanzinho Lima", value: 88059 },
-            { label: "Matheus e Kauan", value: 72310 },
-            { label: "Psirico", value: 22110 }
+            { label: "Durval Lélys", value: 0 },
+            { label: "Nattan", value: 0 },
+            { label: "Natanzinho Lima", value: 0 },
+            { label: "Matheus e Kauan", value: 0 },
+            { label: "Psirico", value: 0 }
         ],
         "30/12": [
-            { label: "Olodum", value: 39210 },
-            { label: "Alok", value: 80210 },
-            { label: "Bell Marques", value: 75210 },
-            { label: "Belo", value: 50210 },
-            { label: "Felipe Amorim", value: 23110 }
+            { label: "Olodum", value: 0 },
+            { label: "Alok", value: 0 },
+            { label: "Bell Marques", value: 0 },
+            { label: "Belo", value: 0 },
+            { label: "Felipe Amorim", value: 0 }
         ],
         "31/12": [
-            { label: "Xanddy Harmonia", value: 292238 },
-            { label: "Jorge e Mateus", value: 69310 },
-            { label: "Ivete Sangalo", value: 251666 },
-            { label: "Mari Fernandez", value: 221948 },
-            { label: "Manu Bahtidão", value: 143166 },
-            { label: "Timbalada", value: 67310 }
+            { label: "Xanddy Harmonia", value: 0 },
+            { label: "Jorge e Mateus", value: 0 },
+            { label: "Ivete Sangalo", value: 0 },
+            { label: "Mari Fernandez", value: 0 },
+            { label: "Manu Bahtidão", value: 0 },
+            { label: "Timbalada", value: 0 }
         ]
         },
 
       alerts: [
-        { msg:"Pico abrupto de entradas na zona Entrada A (+42% em 10 min).", meta:"cam_Elevador_1 · 12:08", level:"WARN" },
-        { msg:"Câmera cam_Mercado_3 com latência acima do padrão (rodada > 5 min).", meta:"Mercado Modelo · 12:06", level:"WARN" },
-        { msg:"Possível supercontagem: taxa OUT muito baixa vs histórico (revisar linha virtual).", meta:"Orla · 11:58", level:"BAD" }
+        { msg:"Áreas livres (+0% em 10 min).", meta:"ENTRADA AVENIDA · 18:30", level:"WARN" },
+        { msg:"Áreas livres (+0% em 10 min).", meta:"ENTRADA ORLA 2 · 18:30", level:"WARN" },
+        { msg:"Áreas livres (+0% em 10 min).", meta:"SAÍDA · 18:30", level:"WARN" }
       ],
       topCams15: [
-        { cam:"cam_Mercado_3", local:"Mercado Modelo — Acesso", in:103, out:24, alerts:2 },
-        { cam:"cam_Elevador_1", local:"Elevador Lacerda Direita", in:52, out:7, alerts:1 },
-        { cam:"cam_Pelourinho_2", local:"Pelourinho — Praça", in:29, out:5, alerts:1 },
-        { cam:"cam_Orla_4", local:"Orla — Trecho 4", in:29, out:7, alerts:0 }
+        { cam:"ENTRADA AVENIDA", local:"Avenida — Acesso", in:1740, out:0, alerts:0 },
+        { cam:"ENTRADA ORLA ", local:"Orla — Acesso ", in:1220, out:0, alerts:0 }
       ],
       camsSaltur: [],
       camsSSP: [],
@@ -1355,8 +1435,8 @@
     const ALL_BANDS_VIRADA = [...state.allBands];
 
     const ALL_BANDS_EVENTS = {
-      "25/12": [{ label: "Frei Gilson (25/12)", value: 185000 }],       // placeholder
-      "26/12": [{ label: "Roberto Carlos (26/12)", value: 265000 }],   // placeholder
+      "25/12": [{ label: "Frei Gilson (25/12)", value: 95380 }],       // placeholder
+      "26/12": [{ label: "Roberto Carlos (26/12)", value: 0 }],   // placeholder
       "27-31/12": ALL_BANDS_VIRADA
     };
 
@@ -1429,6 +1509,364 @@
     }
 
 
+    // ============================================================
+    // XLS (Virada_Dia27) -> JSON (colar e substituir quando atualizar o Excel)
+    // Colunas do XLS: IN_ORLA, IN_AVENIDA, IN_TOTAL, OUT, PICO
+    // ============================================================
+    const XLS_DIA27 = [
+      {
+        "Data_ref": "2025-12-27",
+        "Hora": "18:30",
+        "Banda": "Chegada (Pré-show)",
+        "IN_ORLA": 5417,
+        "IN_AVENIDA": 3491,
+        "IN_TOTAL": 8908,
+        "OUT": 847,
+        "PICO": 8061
+      },
+      {
+        "Data_ref": "2025-12-27",
+        "Hora": "19:00",
+        "Banda": "Chegada (Pré-show)",
+        "IN_ORLA": 10834,
+        "IN_AVENIDA": 6981,
+        "IN_TOTAL": 17815,
+        "OUT": 1695,
+        "PICO": 16120
+      },
+      {
+        "Data_ref": "2025-12-27",
+        "Hora": "19:30",
+        "Banda": "Leo Foguete",
+        "IN_ORLA": 16250,
+        "IN_AVENIDA": 10472,
+        "IN_TOTAL": 26722,
+        "OUT": 2542,
+        "PICO": 24180
+      },
+      {
+        "Data_ref": "2025-12-27",
+        "Hora": "20:00",
+        "Banda": "Leo Foguete",
+        "IN_ORLA": 21667,
+        "IN_AVENIDA": 13963,
+        "IN_TOTAL": 35630,
+        "OUT": 3389,
+        "PICO": 32241
+      },
+      {
+        "Data_ref": "2025-12-27",
+        "Hora": "20:30",
+        "Banda": "Leo Foguete",
+        "IN_ORLA": 27084,
+        "IN_AVENIDA": 17454,
+        "IN_TOTAL": 44538,
+        "OUT": 4237,
+        "PICO": 40301
+      },
+      {
+        "Data_ref": "2025-12-27",
+        "Hora": "21:00",
+        "Banda": "Leo Foguete",
+        "IN_ORLA": 32501,
+        "IN_AVENIDA": 20944,
+        "IN_TOTAL": 53445,
+        "OUT": 5084,
+        "PICO": 48361
+      },
+      {
+        "Data_ref": "2025-12-27",
+        "Hora": "21:30",
+        "Banda": "Leo Santana",
+        "IN_ORLA": 38617,
+        "IN_AVENIDA": 24886,
+        "IN_TOTAL": 63503,
+        "OUT": 7556,
+        "PICO": 55947
+      },
+      {
+        "Data_ref": "2025-12-27",
+        "Hora": "22:00",
+        "Banda": "Leo Santana",
+        "IN_ORLA": 44734,
+        "IN_AVENIDA": 28826,
+        "IN_TOTAL": 73560,
+        "OUT": 8554,
+        "PICO": 65006
+      },
+      {
+        "Data_ref": "2025-12-27",
+        "Hora": "22:30",
+        "Banda": "Leo Santana",
+        "IN_ORLA": 48648,
+        "IN_AVENIDA": 29914,
+        "IN_TOTAL": 78562,
+        "OUT": 9987,
+        "PICO": 68575
+      },
+      {
+        "Data_ref": "2025-12-27",
+        "Hora": "23:00",
+        "Banda": "Leo Santana",
+        "IN_ORLA": 50850,
+        "IN_AVENIDA": 32768,
+        "IN_TOTAL": 83618,
+        "OUT": 12500,
+        "PICO": 71118
+      },
+      {
+        "Data_ref": "2025-12-27",
+        "Hora": "23:30",
+        "Banda": "Wesley Safadão",
+        "IN_ORLA": 58568,
+        "IN_AVENIDA": 37742,
+        "IN_TOTAL": 96310,
+        "OUT": 18750,
+        "PICO": 77560
+      },
+      {
+        "Data_ref": "2025-12-27",
+        "Hora": "00:00",
+        "Banda": "Wesley Safadão",
+        "IN_ORLA": 62427,
+        "IN_AVENIDA": 40228,
+        "IN_TOTAL": 102655,
+        "OUT": 21875,
+        "PICO": 80780
+      },
+      {
+        "Data_ref": "2025-12-27",
+        "Hora": "00:30",
+        "Banda": "Wesley Safadão",
+        "IN_ORLA": 66282,
+        "IN_AVENIDA": 42715,
+        "IN_TOTAL": 108997,
+        "OUT": 24996,
+        "PICO": 84001
+      },
+      {
+        "Data_ref": "2025-12-27",
+        "Hora": "01:00",
+        "Banda": "Wesley Safadão",
+        "IN_ORLA": 68091,
+        "IN_AVENIDA": 43878,
+        "IN_TOTAL": 111969,
+        "OUT": 29097,
+        "PICO": 82872
+      },
+      {
+        "Data_ref": "2025-12-27",
+        "Hora": "01:30",
+        "Banda": "Xand",
+        "IN_ORLA": 69896,
+        "IN_AVENIDA": 45040,
+        "IN_TOTAL": 114936,
+        "OUT": 33001,
+        "PICO": 81935
+      },
+      {
+        "Data_ref": "2025-12-27",
+        "Hora": "02:00",
+        "Banda": "Xand",
+        "IN_ORLA": 69143,
+        "IN_AVENIDA": 44444,
+        "IN_TOTAL": 113587,
+        "OUT": 41043,
+        "PICO": 72544
+      },
+      {
+        "Data_ref": "2025-12-27",
+        "Hora": "02:30",
+        "Banda": "Xand",
+        "IN_ORLA": 68390,
+        "IN_AVENIDA": 43848,
+        "IN_TOTAL": 112238,
+        "OUT": 49084,
+        "PICO": 63154
+      },
+      {
+        "Data_ref": "2025-12-27",
+        "Hora": "03:00",
+        "Banda": "Parangolé",
+        "IN_ORLA": 67637,
+        "IN_AVENIDA": 43251,
+        "IN_TOTAL": 110888,
+        "OUT": 57126,
+        "PICO": 53762
+      },
+      {
+        "Data_ref": "2025-12-27",
+        "Hora": "03:30",
+        "Banda": "Parangolé",
+        "IN_ORLA": 66884,
+        "IN_AVENIDA": 42655,
+        "IN_TOTAL": 109539,
+        "OUT": 65168,
+        "PICO": 44371
+      },
+      {
+        "Data_ref": "2025-12-27",
+        "Hora": "04:00",
+        "Banda": "Parangolé",
+        "IN_ORLA": 70256,
+        "IN_AVENIDA": 45363,
+        "IN_TOTAL": 115619,
+        "OUT": 82410,
+        "PICO": 33209
+      },
+      {
+        "Data_ref": "2025-12-27",
+        "Hora": "04:30",
+        "Banda": "Parangolé",
+        "IN_ORLA": 71794,
+        "IN_AVENIDA": 46266,
+        "IN_TOTAL": 118060,
+        "OUT": 107034,
+        "PICO": 11026
+      },
+      {
+        "Data_ref": "2025-12-27",
+        "Hora": "05:00",
+        "Banda": "Parangolé",
+        "IN_ORLA": 71794,
+        "IN_AVENIDA": 46266,
+        "IN_TOTAL": 118060,
+        "OUT": 116000,
+        "PICO": 2060
+      }
+    ];
+
+
+    const __SSP_MANUAL_KEY = "ssp_manual_override_v1";
+
+    function sspLoadManual(){
+      try { return JSON.parse(localStorage.getItem(__SSP_MANUAL_KEY) || "{}"); }
+      catch { return {}; }
+    }
+    function sspSaveManual(obj){
+      localStorage.setItem(__SSP_MANUAL_KEY, JSON.stringify(obj || {}));
+    }
+
+    function sspAgg(rows){
+      const safe = (n)=> (Number.isFinite(+n) ? +n : 0);
+      const last = rows[rows.length - 1] || {};
+      const sum = (k)=> rows.reduce((acc,r)=> acc + safe(r[k]), 0);
+      const max = (k)=> rows.reduce((m,r)=> Math.max(m, safe(r[k])), 0);
+
+      return {
+        last,
+        sums: {
+          IN_ORLA: sum("IN_ORLA"),
+          IN_AVENIDA: sum("IN_AVENIDA"),
+          IN_TOTAL: sum("IN_TOTAL"),
+          OUT: sum("OUT"),
+        },
+        maxs: {
+          IN_ORLA: max("IN_ORLA"),
+          IN_AVENIDA: max("IN_AVENIDA"),
+          OUT: max("OUT"),
+          PICO: max("PICO")
+        }
+      };
+    }
+
+    // Rebuild dos "cards SSP" a partir do XLS + manual override
+    function rebuildSSPSectors(){
+      const manual = sspLoadManual();
+      const a = sspAgg(XLS_DIA27);
+
+      // KPIs principais (usando o XLS)
+      state.kpis.now = a.last.PICO;            // pessoas presentes agora
+      state.kpis.peakNight = a.maxs.PICO;      // pico da noite
+      state.kpis.total = a.sums.IN_TOTAL;      // total acumulado (somatório dos intervalos)
+      // alertasActive/status você já controla pelo seu pipeline de alertas; aqui só preserva:
+      state.kpis.alertsActive = state.kpis.alertsActive ?? 0;
+      state.kpis.status = (state.kpis.alertsActive >= 5) ? "ATENÇÃO" : "OK";
+
+      // Setores: Orla / Avenida / Camarote / Saída
+      const inCamarote = Number.isFinite(+manual.IN_CAMAROTE) ? +manual.IN_CAMAROTE : null;
+
+      state.camsSSP = [
+        {
+          id: "SSP_IN_ORLA",
+          name: "Entradas Orla (SSP 1 + SSP 2)",
+          status: "ON",
+          passantes: 0,
+          peakNight: a.maxs.IN_ORLA,
+          
+          alerts: 0
+        },
+        {
+          id: "SSP_IN_AVENIDA",
+          name: "Entradas Avenida (SSP 3 + SSP 4 + SSP 5)",
+          status: "ON",
+          passantes: 0,
+          peakNight: a.maxs.IN_AVENIDA,
+          
+          alerts: 0
+        },
+        {
+          id: "SSP_IN_CAMAROTE",
+          name: "Entradas Camarote (SSP 6 + SSP 7)",
+          status: "ON",
+          passantes: 0,     // manual
+          peakNight: inCamarote,
+          
+          alerts: 0
+        },
+        {
+          id: "SSP_OUT",
+          name: "Saídas (SSP 8)",
+          status: "ON",
+          passantes: 0,
+          peakNight: a.maxs.OUT,
+          
+          alerts: 0
+        }
+      ];
+
+      // Atualiza inputs do editor
+      const elOrla = document.getElementById("m_in_orla");
+      const elAv = document.getElementById("m_in_avenida");
+      const elCam = document.getElementById("m_in_camarote");
+      const elOut = document.getElementById("m_out");
+      if(elOrla) elOrla.value = a.last.IN_ORLA ?? "";
+      if(elAv) elAv.value = a.last.IN_AVENIDA ?? "";
+      if(elOut) elOut.value = a.last.OUT ?? "";
+      if(elCam) elCam.value = (inCamarote ?? "");
+    }
+
+    function wireSSPManualEditor(){
+      const btnApply = document.getElementById("m_apply_ssp");
+      const btnClear = document.getElementById("m_clear_ssp");
+      const elCam = document.getElementById("m_in_camarote");
+
+      if(btnApply){
+        btnApply.addEventListener("click", ()=>{
+          const v = elCam ? elCam.value : "";
+          const manual = sspLoadManual();
+          if(v === "" || v === null || v === undefined){
+            delete manual.IN_CAMAROTE;
+          } else {
+            manual.IN_CAMAROTE = Number(v);
+          }
+          sspSaveManual(manual);
+          rebuildSSPSectors();
+          renderKPIs();
+          renderCameras();
+        });
+      }
+
+      if(btnClear){
+        btnClear.addEventListener("click", ()=>{
+          sspSaveManual({});
+          rebuildSSPSectors();
+          renderKPIs();
+          renderCameras();
+        });
+      }
+    }
+
 
 
     // Build camera inventories
@@ -1448,17 +1886,9 @@
       }
       // SSP 8
       state.camsSSP = [];
-      for(let i=1;i<=8;i++){
-        state.camsSSP.push({
-          id:`SSP_${i}`,
-          name:`SSP ${i}`,
-          status: (Math.random()<0.04) ? "OFF" : "ON",
-          passantes: rand(0, 820),
-          peakNight: rand(300, 1600),
-          peakAll: rand(900, 2800),
-          alerts: rand(0, 3)
-        });
-      }
+      // SSP (setores) — vem do XLS + manual override
+      rebuildSSPSectors();
+
       rebuildRankingTop10();
     }
 
@@ -1470,13 +1900,13 @@
     }
 
     /* ============================================================
-       DOM RENDER (non-chart)
+       DOM RENDER (non-chart)  PESSOAS PRESENTES AGORA
        ============================================================ */
     function renderKPIs(){
-      document.getElementById("k_now").textContent = fmtInt(state.kpis.now);
-      document.getElementById("k_peak").textContent = fmtInt(state.kpis.peakNight);
-      document.getElementById("k_total").textContent = fmtInt(state.kpis.total);
-      document.getElementById("k_alerts").textContent = fmtInt(state.kpis.alertsActive);
+      document.getElementById("k_now").textContent = 2860
+      document.getElementById("k_peak").textContent = 2860
+      document.getElementById("k_total").textContent = 2860
+      document.getElementById("k_alerts").textContent = 222.079     //28/12 = 219.219 == 27/12 = 118.060
       document.getElementById("k_status").textContent = state.kpis.status;
 
       document.getElementById("z_pressure").textContent = state.smart.pressureZone;
@@ -1553,9 +1983,9 @@
               <div class="st ${statusClass}">${c.status}</div>
             </div>
             <div class="body">
-              <div class="row"><div>${nowLabel} agora</div><div class="n mono">${nowVal}</div></div>
-              <div class="row"><div>Pico da noite</div><div class="n mono">${c.peakNight}</div></div>
-              <div class="row"><div>Pico geral</div><div class="n mono">${c.peakAll}</div></div>
+              <div class="row"><div>${nowLabel} hoje</div><div class="n mono">${nowVal}</div></div>
+              <div class="row"><div>Acumulado de passantes</div><div class="n mono">${c.peakNight}</div></div>
+              <div class="row"><div>Fluxo</div><div class="n mono">${c.peakAll}</div></div>
               <div class="row"><div>Alertas</div><div class="n mono" style="color:${c.alerts? 'var(--warn)':'rgba(255,255,255,.75)'};">${c.alerts}</div></div>
               <button class="btn" data-cam="${c.id}" data-isssp="${isSSP?'1':'0'}">Ver detalhes</button>
             </div>
@@ -1655,23 +2085,151 @@
 
 
     function createAllBandsCompact(){
-      const ctx = document.getElementById("chartAllBandsCompact");
+      const canvas = document.getElementById("chartAllBandsCompact");
+      if(!canvas) return null;
+
       const items = [...getSelectedAllBands()];
-      // map cores por dia (centralizado em DAY_COLORS)
-      const colors = barColorsFromLabels(items.map(i=>i.label));
+      const labels = items.map(x=>x.label);
+      const values = items.map(x=>x.value);
+
+      // cores por dia (DAY_COLORS)
+      const colors = barColorsFromLabels(labels);
+
+      return new Chart(canvas, {
+        type:"bar",
+        data:{
+          labels,
+          datasets:[{
+            label:"Público",
+            data: values,
+            backgroundColor: colors,
+            borderRadius: 10,
+            borderSkipped: false,
+            categoryPercentage: 0.92,
+            barPercentage: 0.92,
+            maxBarThickness: 22
+          }]
+        },
+        options:{
+          responsive:true,
+          maintainAspectRatio:false,
+          animation:false,
+          plugins:{
+            legend:{ display:false },
+            tooltip:{
+              enabled:true,
+              backgroundColor:"#0b111a",
+              borderColor:"rgba(255,255,255,.10)",
+              borderWidth:1,
+              titleColor:"rgba(255,255,255,.92)",
+              bodyColor:"rgba(255,255,255,.85)",
+              padding:10,
+              callbacks:{
+                label:(ctx)=>` ${fmtInt(ctx.parsed.y)}`
+              }
+            }
+          },
+          scales:{
+            x:{
+              ticks:{
+                color:"rgba(255,255,255,.75)",
+                maxRotation: 60,
+                minRotation: 60,
+                autoSkip: false,
+                font:{ size: 11 }
+              },
+              grid:{ color:"rgba(255,255,255,.06)" }
+            },
+            y:{
+              beginAtZero:true,
+              ticks:{
+                color:"rgba(255,255,255,.65)",
+                callback:(v)=> (v>=1000? (v/1000).toFixed(0)+"k" : v)
+              },
+              grid:{ color:"rgba(255,255,255,.06)" }
+            }
+          }
+        }
+      });
     }
 
     function createAllBandsFull(){
-      const ctx = document.getElementById("chartAllBandsFull");
+      const canvas = document.getElementById("chartAllBandsFull");
+      if(!canvas) return null;
+
       const items = [...getSelectedAllBands()];
-      // map cores por dia (centralizado em DAY_COLORS)
-      const colors = barColorsFromLabels(items.map(i=>i.label));
+      const labels = items.map(x=>x.label);
+      const values = items.map(x=>x.value);
+
+      // cores por dia (DAY_COLORS)
+      const colors = barColorsFromLabels(labels);
+
+      return new Chart(canvas, {
+        type:"bar",
+        data:{
+          labels,
+          datasets:[{
+            label:"Público",
+            data: values,
+            backgroundColor: colors,
+            borderRadius: 10,
+            borderSkipped: false,
+            categoryPercentage: 0.92,
+            barPercentage: 0.92,
+            maxBarThickness: 26
+          }]
+        },
+        options:{
+          responsive:true,
+          maintainAspectRatio:false,
+          animation:false,
+          plugins:{
+            legend:{ display:false },
+            tooltip:{
+              enabled:true,
+              backgroundColor:"#0b111a",
+              borderColor:"rgba(255,255,255,.10)",
+              borderWidth:1,
+              titleColor:"rgba(255,255,255,.92)",
+              bodyColor:"rgba(255,255,255,.85)",
+              padding:10,
+              callbacks:{
+                label:(ctx)=>` ${fmtInt(ctx.parsed.y)}`
+              }
+            }
+          },
+          scales:{
+            x:{
+              ticks:{
+                color:"rgba(255,255,255,.80)",
+                maxRotation: 55,
+                minRotation: 55,
+                autoSkip: false,
+                font:{ size: 12 }
+              },
+              grid:{ color:"rgba(255,255,255,.06)" }
+            },
+            y:{
+              beginAtZero:true,
+              ticks:{
+                color:"rgba(255,255,255,.70)",
+                callback:(v)=> (v>=1000? (v/1000).toFixed(0)+"k" : v)
+              },
+              grid:{ color:"rgba(255,255,255,.06)" }
+            }
+          }
+        }
+      });
     }
 
     function createBigRanking(){
-      const ctx = document.getElementById("chartBigRanking");
-      const items = [...state.rankingTop10]; // already top10 sorted
-      return new Chart(ctx,{
+      const canvas = document.getElementById("chartBigRanking");
+      if(!canvas) return null; // nesta versão (SSP) pode não existir
+
+      const items = [...(state.rankingTop10 || [])]; // FIX: era [.state...]
+      if(!items.length) return null;
+
+      return new Chart(canvas,{
         type:"bar",
         data:{
           labels: items.map(x=>x.label),
@@ -1679,7 +2237,7 @@
             label:"Público",
             data: items.map(x=>x.value),
             borderRadius:8,
-            backgroundColor:"rgba(255,204,102,.72)"
+            backgroundColor:"rgba(255,204,102,72)"
           }]
         },
         options:{
@@ -1692,20 +2250,18 @@
             tooltip:{
               enabled:true,
               backgroundColor:"#0b111a",
-              borderColor:"rgba(255,255,255,.10)",
+              borderColor:"rgba(255,255,255,10)",
               borderWidth:1,
-              titleColor:"rgba(255,255,255,.92)",
-              bodyColor:"rgba(255,255,255,.85)",
+              titleColor:"rgba(255,255,255,92)",
+              bodyColor:"rgba(255,255,255,85)",
               padding:10,
-              callbacks:{
-                label:(ctx)=>` ${fmtInt(ctx.parsed.x)}`
-              }
+              callbacks:{ label:(ctx)=>` ${fmtInt(ctx.parsed.x)}` }
             }
           },
           scales:{
             x:{
               ticks:{
-                color:"rgba(255,255,255,.65)",
+                color:"rgba(255,255,255,65)",
                 callback:(v)=> (v>=1000? (v/1000).toFixed(0)+".000" : v)
               },
               grid:{ color:"rgba(255,255,255,.06)" },
@@ -1720,9 +2276,11 @@
       });
     }
 
+
     function createNightChart(canvasId, nightKey, color){
       const ctx = document.getElementById(canvasId);
       const items = state.nights[nightKey];
+      
       return new Chart(ctx,{
         type:"bar",
         data:{
@@ -1750,16 +2308,25 @@
       });
     }
 
-    function createCamModalChart(){
+
+    function createCamModalChart(labels, data){
       const ctx = document.getElementById("camModalChart");
-      const labels = Array.from({length:30}, (_,i)=>`${i+1}m`);
-      const data = labels.map(()=>rand(0, 80));
+      const _labels = Array.isArray(labels) && labels.length ? labels : Array.from({length:30}, (_,i)=>`${i+1}m`);
+      const _data = Array.isArray(data) && data.length ? data : _labels.map(()=>rand(0, 80));
+
+      const opts = baseChartOptions();
+      opts.plugins = Object.assign({}, opts.plugins, { legend:{display:false} });
+      opts.scales = {
+        x:{ ticks:{ color:"rgba(255,255,255,55)", autoSkip:true, maxRotation:0 }, grid:{ color:"rgba(255,255,255,06)" } },
+        y:{ ticks:{ color:"rgba(255,255,255,55)" }, grid:{ color:"rgba(255,255,255,06)" }, beginAtZero:true }
+      };
+
       return new Chart(ctx,{
         type:"line",
         data:{
-          labels,
+          labels:_labels,
           datasets:[{
-            data,
+            data:_data,
             borderColor:"rgba(87,164,255,.92)",
             backgroundColor:"rgba(87,164,255,.16)",
             tension:.35,
@@ -1767,14 +2334,7 @@
             pointRadius:0
           }]
         },
-        options:{
-          ...baseChartOptions(),
-          plugins:{ ...baseChartOptions().plugins, legend:{display:false} },
-          scales:{
-            x:{ ticks:{ color:"rgba(255,255,255,.55)", autoSkip:true }, grid:{ color:"rgba(255,255,255,.06)" } },
-            y:{ ticks:{ color:"rgba(255,255,255,.55)" }, grid:{ color:"rgba(255,255,255,.06)" }, beginAtZero:true }
-          }
-        }
+        options: opts
       });
     }
 
@@ -1889,54 +2449,54 @@
     };
 
     // Mapeamento oficial: zona -> câmeras (pronto p/ substituir por consultas SQL)
-    const ZONE_CAMERAS = {
-      Z01: [1, 2, 3],
-      Z02: [4, 5],
-      Z03: [6, 7],
-      Z04: [8, 9],
-      Z05: [10, 11],
-      Z06: [6],
-      Z07: [12, 13],
-      Z08: [14],
-      Z09: [15, 16],
-      Z10: [17, 18],
-      Z11: [19, 20],
-      Z12: [21, 22],
-      Z13: [23, 24],
-      Z14: [25],
-      Z15: [26, 27, 28, 29],
-      Z16: [30],
-      Z17: [31],
-      Z18: [32],
-      Z19: [33],
-      Z20: [34],
-      Z21: [35],
+     const ZONE_CAMERAS = {
+        Z01: ["1", "50", "51", "52"],
+        Z02: ["44", "46", "47", "48", "49", "17-PTZ"],
+        Z03: ["42", "43"],
+        Z04: ["45"],
+        Z05: ["41"],
+        Z06: ["11"],
+        Z07: ["39", "40"],
+        Z08: ["22 (SSP - passantes)"],
+        Z09: ["35", "37", "38"],
+        Z10: ["31"],
+        Z11: ["33", "34"],
+        Z12: ["32"],
+        Z13: ["23", "24", "36"],
+        Z14: ["25"],
+        Z15: ["2-PTZ", "26", "27", "29", "30", "54"],
+        Z16: ["28"],
+        Z17: [],
+        Z18: ["32"],
+        Z19: [],
+        Z20: ["34 (SSP)"],
+        Z21: ["35 (SSP)"],
     };
 
     // Metadados (títulos/descrições) usados na legenda e no modal
     const ZONE_META = {
-      Z01: { title:"Z01 — Arena — Frente do palco principal", desc:"Somatório de câmeras: 1, 2, 3." },
-      Z02: { title:"Z02 — Arena — Intermediário", desc:"Somatório de câmeras: 4, 5." },
-      Z03: { title:"Z03 — Praça de alimentação e arquibancada", desc:"Somatório de câmeras: 6, 7." },
-      Z04: { title:"Z04 — Arena — Fundo", desc:"Somatório de câmeras: 8, 9." },
-      Z05: { title:"Z05 — Polícia Civil / GSM", desc:"Somatório de câmeras: 10, 11." },
-      Z06: { title:"Z06 — Roda gigante", desc:"Somatório de câmeras: 6." },
-      Z07: { title:"Z07 — Acesso arena", desc:"Somatório de câmeras: 12, 13." },
-      Z08: { title:"Z08 — Pista — Entrada orla", desc:"Câmera 14. Regra: últimos 5 min vs média histórica (desta câmera)." },
-      Z09: { title:"Z09 — Área verde — Acesso", desc:"Somatório de câmeras: 15, 16." },
-      Z10: { title:"Z10 — Foodtrucks 1", desc:"Somatório de câmeras: 17, 18." },
-      Z11: { title:"Z11 — Foodtrucks 2", desc:"Somatório de câmeras: 19, 20." },
-      Z12: { title:"Z12 — Palco Brisa", desc:"Somatório de câmeras: 21, 22." },
-      Z13: { title:"Z13 — Área verde — Palco Brisa", desc:"Somatório de câmeras: 23, 24." },
-      Z14: { title:"Z14 — Fundo Palco Brisa", desc:"Somatório de câmeras: 25." },
-      Z15: { title:"Z15 — Área verde — Pista de Skate", desc:"Somatório de câmeras: 26, 27, 28, 29." },
-      Z16: { title:"Z16 — Entrada 2 avenida", desc:"Somatório de câmeras: 30." },
-      Z17: { title:"Z17 — Zona morta", desc:"Somatório de câmeras: 31." },
-      Z18: { title:"Z18 — Camarote — Frente do palco principal", desc:"Somatório de câmeras: 32." },
-      Z19: { title:"Z19 — Backstage", desc:"Somatório de câmeras: 33." },
-      Z20: { title:"Z20 — Saída (SSP)", desc:"Somatório de câmeras: 34. (SSP)" },
-      Z21: { title:"Z21 — Acesso Camarote (SSP)", desc:"Somatório de câmeras: 35. (SSP)" },
-    };
+      Z01: { title:"Z01 — Arena (Frente do palco principal)", desc:"Câmeras: 1, 50, 51, 52." },
+      Z02: { title:"Z02 — Arena (Intermediário)", desc:"Câmeras: 44, 46, 47, 48, 49, 17-PTZ." },
+      Z03: { title:"Z03 — Praça de alimentação e arquibancada", desc:"Câmeras: 42, 43." },
+      Z04: { title:"Z04 — Arena (Fundo)", desc:"Câmera: 45." },
+      Z05: { title:"Z05 — Polícia Civil (GSM)", desc:"Câmera: 41." },
+      Z06: { title:"Z06 — Roda gigante", desc:"Câmera: 11." },
+      Z07: { title:"Z07 — Acesso arena", desc:"Câmeras: 39, 40." },
+      Z08: { title:"Z08 — Pista entrada Orla (SSP)", desc:"Câmera: 22 (passantes SSP)." },
+      Z09: { title:"Z09 — Área verde acesso", desc:"Câmeras: 35, 37, 38." },
+      Z10: { title:"Z10 — Foodtrucks 1", desc:"Câmera: 31." },
+      Z11: { title:"Z11 — Foodtrucks 2", desc:"Câmeras: 33, 34." },
+      Z12: { title:"Z12 — Palco Brisa", desc:"Câmera: 32." },
+      Z13: { title:"Z13 — Área verde (Palco Brisa)", desc:"Câmeras: 23, 24, 36." },
+      Z14: { title:"Z14 — Fundo Palco Brisa", desc:"Câmera: 25." },
+      Z15: { title:"Z15 — Área verde (Pista de Skate)", desc:"Câmeras: 2-PTZ, 26, 27, 29, 30, 54." },
+      Z16: { title:"Z16 — Entrada 2 avenida", desc:"Câmera: 28." },
+      Z17: { title:"Z17 — Zona morta", desc:"Sem câmeras." },
+      Z18: { title:"Z18 — Camarote (Frente do palco principal)", desc:"Câmera: 32." },
+      Z19: { title:"Z19 — Backstage", desc:"Sem câmeras." },
+      Z20: { title:"Z20 — Saída (SSP)", desc:"Câmera: 34 (SSP)." },
+      Z21: { title:"Z21 — Acesso Camarote (SSP)", desc:"Câmeras: 35 (SSP)." },
+  };
 
     function renderZonesLegend(){
       const el = document.getElementById("zonesLegend");
@@ -1959,6 +2519,41 @@
     // Valores instantâneos por zona (usados para cor do mapa)
     const heatValues = Object.fromEntries(Object.keys(ZONE_CAMERAS).map(zid=>[zid, 0]));
 
+
+     // ============================================================
+    // DADOS MANUAIS (Densidade por zona) — DIA 27/12 (pico acumulado)
+    // - Regra aplicada: "pico somado" por zona (não diminui ao longo da noite).
+    // - TOTAL_PRESENTE aqui é o somatório das zonas (referência para consistência).
+    // ============================================================
+
+    const MANUAL_ZONE_SERIES_27 = [
+      { t:"18:00", TOTAL_PRESENTE:0, Z01:0, Z02:0, Z03:0, Z04:0, Z05:0, Z06:0, Z07:0, Z08:0, Z09:0, Z10:0, Z11:0, Z12:0, Z13:0, Z14:0, Z15:0, Z16:0, Z17:0, Z18:0, Z19:0, Z20:0, Z21:0 },
+      { t:"18:30", TOTAL_PRESENTE:8058, Z01:2355, Z02:2133, Z03:1328, Z04:392, Z05:376, Z06:300, Z07:166, Z08:410, Z09:56, Z10:23, Z11:66, Z12:63, Z13:38, Z14:23, Z15:83, Z16:156, Z17:0, Z18:53, Z19:0, Z20:28, Z21:9 },
+      { t:"19:00", TOTAL_PRESENTE:16211, Z01:4876, Z02:4266, Z03:2565, Z04:828, Z05:762, Z06:609, Z07:309, Z08:820, Z09:111, Z10:46, Z11:131, Z12:122, Z13:75, Z14:47, Z15:155, Z16:313, Z17:0, Z18:102, Z19:0, Z20:56, Z21:18 },
+      { t:"19:30", TOTAL_PRESENTE:24415, Z01:7464, Z02:6400, Z03:3770, Z04:1283, Z05:1152, Z06:921, Z07:446, Z08:1231, Z09:167, Z10:69, Z11:197, Z12:180, Z13:113, Z14:70, Z15:223, Z16:469, Z17:0, Z18:149, Z19:0, Z20:84, Z21:27 },
+      { t:"20:00", TOTAL_PRESENTE:32649, Z01:10097, Z02:8533, Z03:4955, Z04:1750, Z05:1545, Z06:1236, Z07:577, Z08:1641, Z09:222, Z10:92, Z11:263, Z12:236, Z13:150, Z14:94, Z15:289, Z16:625, Z17:0, Z18:196, Z19:0, Z20:112, Z21:36 },
+      { t:"20:30", TOTAL_PRESENTE:40910, Z01:12762, Z02:10666, Z03:6125, Z04:2227, Z05:1939, Z06:1552, Z07:706, Z08:2051, Z09:278, Z10:115, Z11:328, Z12:292, Z13:188, Z14:117, Z15:353, Z16:781, Z17:0, Z18:243, Z19:0, Z20:141, Z21:46 },
+      { t:"21:00", TOTAL_PRESENTE:49193, Z01:15455, Z02:12799, Z03:7284, Z04:2712, Z05:2336, Z06:1869, Z07:832, Z08:2462, Z09:333, Z10:138, Z11:394, Z12:347, Z13:225, Z14:140, Z15:416, Z16:938, Z17:0, Z18:289, Z19:0, Z20:169, Z21:55 },
+      { t:"21:30", TOTAL_PRESENTE:56638, Z01:18010, Z02:14807, Z03:8365, Z04:3174, Z05:2710, Z06:2168, Z07:948, Z08:2553, Z09:386, Z10:160, Z11:456, Z12:398, Z13:260, Z14:163, Z15:474, Z16:1016, Z17:0, Z18:332, Z19:0, Z20:195, Z21:63 },
+      { t:"22:00", TOTAL_PRESENTE:64098, Z01:20582, Z02:16815, Z03:9439, Z04:3641, Z05:3085, Z06:2468, Z07:1063, Z08:2644, Z09:438, Z10:182, Z11:517, Z12:449, Z13:296, Z14:185, Z15:532, Z16:1094, Z17:0, Z18:374, Z19:0, Z20:222, Z21:72 },
+      { t:"22:30", TOTAL_PRESENTE:71570, Z01:23170, Z02:18822, Z03:10507, Z04:4113, Z05:3461, Z06:2769, Z07:1177, Z08:2735, Z09:490, Z10:203, Z11:579, Z12:500, Z13:331, Z14:207, Z15:589, Z16:1172, Z17:0, Z18:417, Z19:0, Z20:248, Z21:80 },
+      { t:"23:00", TOTAL_PRESENTE:74674, Z01:24273, Z02:19675, Z03:10958, Z04:4314, Z05:3621, Z06:2897, Z07:1225, Z08:2735, Z09:512, Z10:212, Z11:605, Z12:522, Z13:346, Z14:216, Z15:613, Z16:1172, Z17:0, Z18:435, Z19:0, Z20:259, Z21:84 },
+      { t:"23:30", TOTAL_PRESENTE:77784, Z01:25379, Z02:20527, Z03:11409, Z04:4517, Z05:3781, Z06:3026, Z07:1272, Z08:2735, Z09:535, Z10:222, Z11:632, Z12:543, Z13:361, Z14:225, Z15:637, Z16:1172, Z17:0, Z18:452, Z19:0, Z20:271, Z21:88 },
+      { t:"00:00", TOTAL_PRESENTE:80891, Z01:26486, Z02:21380, Z03:11858, Z04:4719, Z05:3942, Z06:3154, Z07:1320, Z08:2735, Z09:557, Z10:231, Z11:658, Z12:565, Z13:376, Z14:235, Z15:660, Z16:1172, Z17:0, Z18:470, Z19:0, Z20:282, Z21:91 },
+      { t:"00:30", TOTAL_PRESENTE:84000, Z01:27596, Z02:22232, Z03:12307, Z04:4923, Z05:4102, Z06:3282, Z07:1367, Z08:2735, Z09:579, Z10:240, Z11:684, Z12:586, Z13:391, Z14:244, Z15:684, Z16:1172, Z17:0, Z18:488, Z19:0, Z20:293, Z21:95 },
+      { t:"01:00", TOTAL_PRESENTE:84000, Z01:27596, Z02:22232, Z03:12307, Z04:4923, Z05:4102, Z06:3282, Z07:1367, Z08:2735, Z09:579, Z10:240, Z11:684, Z12:586, Z13:391, Z14:244, Z15:684, Z16:1172, Z17:0, Z18:488, Z19:0, Z20:293, Z21:95 },
+      { t:"01:30", TOTAL_PRESENTE:84000, Z01:27596, Z02:22232, Z03:12307, Z04:4923, Z05:4102, Z06:3282, Z07:1367, Z08:2735, Z09:579, Z10:240, Z11:684, Z12:586, Z13:391, Z14:244, Z15:684, Z16:1172, Z17:0, Z18:488, Z19:0, Z20:293, Z21:95 },
+      { t:"02:00", TOTAL_PRESENTE:84000, Z01:27596, Z02:22232, Z03:12307, Z04:4923, Z05:4102, Z06:3282, Z07:1367, Z08:2735, Z09:579, Z10:240, Z11:684, Z12:586, Z13:391, Z14:244, Z15:684, Z16:1172, Z17:0, Z18:488, Z19:0, Z20:293, Z21:95 },
+      { t:"02:30", TOTAL_PRESENTE:84000, Z01:27596, Z02:22232, Z03:12307, Z04:4923, Z05:4102, Z06:3282, Z07:1367, Z08:2735, Z09:579, Z10:240, Z11:684, Z12:586, Z13:391, Z14:244, Z15:684, Z16:1172, Z17:0, Z18:488, Z19:0, Z20:293, Z21:95 },
+      { t:"03:00", TOTAL_PRESENTE:84000, Z01:27596, Z02:22232, Z03:12307, Z04:4923, Z05:4102, Z06:3282, Z07:1367, Z08:2735, Z09:579, Z10:240, Z11:684, Z12:586, Z13:391, Z14:244, Z15:684, Z16:1172, Z17:0, Z18:488, Z19:0, Z20:293, Z21:95 },
+      { t:"03:30", TOTAL_PRESENTE:84000, Z01:27596, Z02:22232, Z03:12307, Z04:4923, Z05:4102, Z06:3282, Z07:1367, Z08:2735, Z09:579, Z10:240, Z11:684, Z12:586, Z13:391, Z14:244, Z15:684, Z16:1172, Z17:0, Z18:488, Z19:0, Z20:293, Z21:95 },
+      { t:"04:00", TOTAL_PRESENTE:84000, Z01:27596, Z02:22232, Z03:12307, Z04:4923, Z05:4102, Z06:3282, Z07:1367, Z08:2735, Z09:579, Z10:240, Z11:684, Z12:586, Z13:391, Z14:244, Z15:684, Z16:1172, Z17:0, Z18:488, Z19:0, Z20:293, Z21:95 },
+      { t:"04:30", TOTAL_PRESENTE:84000, Z01:27596, Z02:22232, Z03:12307, Z04:4923, Z05:4102, Z06:3282, Z07:1367, Z08:2735, Z09:579, Z10:240, Z11:684, Z12:586, Z13:391, Z14:244, Z15:684, Z16:1172, Z17:0, Z18:488, Z19:0, Z20:293, Z21:95 },
+      { t:"05:00", TOTAL_PRESENTE:84000, Z01:27596, Z02:22232, Z03:12307, Z04:4923, Z05:4102, Z06:3282, Z07:1367, Z08:2735, Z09:579, Z10:240, Z11:684, Z12:586, Z13:391, Z14:244, Z15:684, Z16:1172, Z17:0, Z18:488, Z19:0, Z20:293, Z21:95 }
+    ];
+
+    const MANUAL_ZONE_MAP_27 = Object.fromEntries(MANUAL_ZONE_SERIES_27.map(r=>[r.t, r]));
+
     // Período solicitado (placeholders): 12/05/2025 até 31/05/2025
     const ZONE_PERIOD_START = new Date(2025, 4, 12); // 12/05/2025
     const ZONE_PERIOD_END   = new Date(2025, 4, 31); // 31/05/2025
@@ -1979,6 +2574,8 @@
       }
       return out;
     }
+
+
 
     // RNG determinístico (para manter o demo estável entre refresh)
     function seededRand(seedStr){
@@ -2051,36 +2648,32 @@
       return "rgba(0,0,0,0)";
     }
 
+    // Força o mapa a usar o manual (sem backend e sem placeholders)
+    const FORCE_MANUAL_HEATMAP = true;
+
+    // Se quiser travar o mapa em um horário específico pra teste:
+    // const MANUAL_HEATMAP_SLOT = "22:30";
+    const MANUAL_HEATMAP_SLOT = null;
+
+    function floorToHalfHourHHMM(d){
+      const hh = String(d.getHours()).padStart(2,"0");
+      const mm = (d.getMinutes() < 30) ? "00" : "30";
+      return `${hh}:${mm}`;
+    }
+
+    function getManualRow27(){
+      const slot = MANUAL_HEATMAP_SLOT || floorToHalfHourHHMM(new Date());
+      if (MANUAL_ZONE_MAP_27[slot]) return MANUAL_ZONE_MAP_27[slot];
+
+      // clamp fora da janela do evento
+      if (slot < "18:00") return MANUAL_ZONE_MAP_27["18:00"];
+      return MANUAL_ZONE_MAP_27["05:00"];
+    }
+
     function updateZoneHeatValues(){
-      // Base: usa o último dia do período como “referência”, + ruído minuto-a-minuto
-      for(const zid of Object.keys(ZONE_CAMERAS)){
-        const hist = getZoneHistory(zid);
-        const base = hist[hist.length-1]?.total || 0;
-
-        // ruído suave
-        const v = Math.max(0, Math.round(base * (0.86 + Math.random()*0.28)));
-
-        // Z08: regra de fluxo (últimos 5 min vs média)
-        if(zid==="Z08"){
-          // simula fluxo da câmera 14 (por minuto)
-          const flow = Math.round(420 + Math.random()*860); // pessoas/min (placeholder)
-          const series = window.__dashState.cam14Flow;
-          series.push(flow);
-          while(series.length > 90) series.shift();
-
-          const avg = series.reduce((a,b)=>a+b,0) / (series.length || 1);
-          const last5 = series.slice(-5).reduce((a,b)=>a+b,0) / (Math.min(5, series.length) || 1);
-
-          window.__dashState.cam14Avg = avg;
-
-          // se últimos 5 min > média => quente
-          const hot = last5 > (avg * 1.12);
-          // transforma em “valor” para cor (hot => puxa para cima)
-          heatValues[zid] = hot ? Math.round(HEAT_T2 + (last5*18)) : Math.round(HEAT_T1 * 0.65 + (last5*10));
-          heatValues[zid] = clamp(heatValues[zid], 0, 65000);
-        } else {
-          heatValues[zid] = clamp(v, 0, 65000);
-        }
+      const row = getManualRow27();
+      for (const zid of Object.keys(ZONE_CAMERAS)){
+        heatValues[zid] = clamp(Math.round(row?.[zid] || 0), 0, 65000);
       }
     }
 
@@ -2102,8 +2695,10 @@
     function ensureZoneModalCharts(){
       if(charts.zoneDaily && charts.zonePeriods) return;
 
-      // Daily line
       const ctxD = document.getElementById("zoneChartDaily");
+      const ctxP = document.getElementById("zoneChartPeriods");
+      if(!ctxD || !ctxP) return; // evita crash
+
       charts.zoneDaily = new Chart(ctxD, {
         type:"line",
         data:{ labels:[], datasets:[{ data:[], borderColor:"rgba(87,164,255,1)", backgroundColor:"rgba(87,164,255,.12)", tension:.35, fill:false, pointRadius:0 }] },
@@ -2117,11 +2712,18 @@
         }
       });
 
-      // Periods bar
-      const ctxP = document.getElementById("zoneChartPeriods");
       charts.zonePeriods = new Chart(ctxP, {
         type:"bar",
-        data:{ labels:["Manhã","Tarde","Noite"], datasets:[{ data:[0,0,0], backgroundColor:["rgba(87,164,255,.35)","rgba(255,170,0,.35)","rgba(255,70,120,.35)"], borderColor:"rgba(255,255,255,.12)", borderWidth:1, borderRadius:10 }] },
+        data:{
+          labels: ZONE_BLOCKS.map(b=>b.label),
+          datasets:[{
+            data: new Array(ZONE_BLOCKS.length).fill(0),
+            backgroundColor: "rgba(255,255,255,.18)",
+            borderColor:"rgba(255,255,255,.12)",
+            borderWidth:1,
+            borderRadius:10
+          }]
+        },
         options:{
           responsive:true, maintainAspectRatio:false,
           plugins:{ legend:{display:false}, tooltip:{enabled:true} },
@@ -2133,6 +2735,43 @@
       });
     }
 
+
+    const EVENT_LABEL = "27/12";
+    const EVENT_WINDOW_LABEL = "18:00–05:00";
+
+    function timeToEventMinutes(hhmm){
+      const [h,m] = hhmm.split(":").map(Number);
+      let min = h*60 + m;
+      // após meia-noite, ainda é “dia 27” até 06:00
+      if(min < 6*60) min += 24*60;
+      return min;
+    }
+
+    const ZONE_BLOCKS = [
+      { label:"18–21", from:"18:00", to:"21:00" },
+      { label:"21–01", from:"21:00", to:"01:00" },
+      { label:"01–03", from:"01:00", to:"03:00" },
+      { label:"03–05", from:"03:00", to:"05:00" }
+    ];
+
+    function inBlock(hhmm, block){
+      const t = timeToEventMinutes(hhmm);
+      const a = timeToEventMinutes(block.from);
+      const b = timeToEventMinutes(block.to);
+      return (t >= a && t < b);
+    }
+
+    function getZoneSeries27(zid){
+      const out = [];
+      for(const [hhmm, row] of Object.entries(MANUAL_ZONE_MAP_27)){
+        if(hhmm === "TOTAL_PRESENTE") continue;
+        out.push({ hhmm, value: Number(row?.[zid] ?? 0) });
+      }
+      out.sort((a,b)=>timeToEventMinutes(a.hhmm)-timeToEventMinutes(b.hhmm));
+      return out;
+    }
+
+
     function openZoneModal(zid){
       const meta = ZONE_META[zid] || { title:zid, desc:"" };
       window.__dashState.selectedZone = zid;
@@ -2143,61 +2782,67 @@
       document.getElementById("zoneModalTitle").textContent = meta.title;
       document.getElementById("zoneModalSub").textContent = meta.desc;
 
-      // Dados
-      const rows = getZoneHistory(zid);
-      const labels = rows.map(r=>fmtBR(r.date));
-      const totals = rows.map(r=>r.total);
+      // Série do evento (meia em meia hora)
+      const series = getZoneSeries27(zid);
+      const labels = series.map(p=>p.hhmm);
+      const totals = series.map(p=>p.value);
 
       const totalPeriod = totals.reduce((a,b)=>a+b,0);
-      const avgDay = Math.round(totalPeriod / (totals.length || 1));
+      const avgSlot = Math.round(totalPeriod / (totals.length || 1));
+
       let peak = -1, peakIdx = 0;
       totals.forEach((v,i)=>{ if(v>peak){ peak=v; peakIdx=i; } });
 
-      const sumMorning = rows.reduce((a,r)=>a+r.morning,0);
-      const sumAfternoon = rows.reduce((a,r)=>a+r.afternoon,0);
-      const sumNight = rows.reduce((a,r)=>a+r.night,0);
-
       // KPIs
       document.getElementById("zoneKpiTotal").textContent = totalPeriod.toLocaleString("pt-BR");
-      document.getElementById("zoneKpiAvg").textContent = avgDay.toLocaleString("pt-BR");
+      document.getElementById("zoneKpiAvg").textContent = avgSlot.toLocaleString("pt-BR");
       document.getElementById("zoneKpiPeak").textContent = peak.toLocaleString("pt-BR");
-      document.getElementById("zoneKpiPeakSub").textContent = `Dia: ${labels[peakIdx]} (${fmtBRFull(rows[peakIdx].date)})`;
+      document.getElementById("zoneKpiPeakSub").textContent = `${EVENT_LABEL} · ${labels[peakIdx]} (${EVENT_WINDOW_LABEL})`;
 
-      // Status (especial Z08)
+      // Status (mantém regra especial Z08; demais usa thresholds do heatmap)
       let status = "NORMAL";
       if(zid==="Z08"){
-        const series = window.__dashState.cam14Flow;
+        const series5 = window.__dashState.cam14Flow || [];
         const avg = window.__dashState.cam14Avg || 0;
-        const last5 = series.slice(-5).reduce((a,b)=>a+b,0) / (Math.min(5, series.length) || 1);
+        const last5 = series5.slice(-5).reduce((a,b)=>a+b,0) / (Math.min(5, series5.length) || 1);
         status = (last5 > avg*1.12) ? "QUENTE" : "FRIO";
       } else {
         status = (heatValues[zid] >= HEAT_T2) ? "QUENTE" : (heatValues[zid] >= HEAT_T1 ? "ATENÇÃO" : "NORMAL");
       }
       document.getElementById("zoneKpiStatus").textContent = status;
 
+      // Blocos do evento (para o gráfico “Por período”)
+      const blockSums = ZONE_BLOCKS.map(b =>
+        series.filter(p=>inBlock(p.hhmm, b)).reduce((a,p)=>a+p.value,0)
+      );
+
       // Charts
       ensureZoneModalCharts();
-      charts.zoneDaily.data.labels = labels;
-      charts.zoneDaily.data.datasets[0].data = totals;
-      charts.zoneDaily.update("none");
+      if(charts.zoneDaily){
+        charts.zoneDaily.data.labels = labels;
+        charts.zoneDaily.data.datasets[0].data = totals;
+        charts.zoneDaily.update("none");
+      }
+      if(charts.zonePeriods){
+        charts.zonePeriods.data.labels = ZONE_BLOCKS.map(b=>b.label);
+        charts.zonePeriods.data.datasets[0].data = blockSums;
+        charts.zonePeriods.update("none");
+      }
 
-      charts.zonePeriods.data.datasets[0].data = [sumMorning, sumAfternoon, sumNight];
-      charts.zonePeriods.update("none");
-
-      // Table
+      // Table (meia em meia hora)
       const tbody = document.querySelector("#zoneTable tbody");
-      tbody.innerHTML = rows.map(r=>`
+      tbody.innerHTML = series.map(p=>`
         <tr>
-          <td>${fmtBRFull(r.date)}</td>
-          <td class="mono">${r.total.toLocaleString("pt-BR")}</td>
-          <td class="mono">${r.morning.toLocaleString("pt-BR")}</td>
-          <td class="mono">${r.afternoon.toLocaleString("pt-BR")}</td>
-          <td class="mono">${r.night.toLocaleString("pt-BR")}</td>
+          <td>${p.hhmm}</td>
+          <td class="mono">${p.value.toLocaleString("pt-BR")}</td>
         </tr>
       `).join("");
 
       openModal("modalZone");
     }
+
+
+
 function updateHeatmap(){
       for(const z of HEAT_ZONES){
         const v = heatValues[z.id] || 0;
@@ -2256,7 +2901,22 @@ function initCharts(){
     /* ============================================================
        DYNAMIC TICK (simulate minute refresh)
        ============================================================ */
-    function tick(){
+    async function tick(){
+    // Backend mode: se autenticado, puxa dados reais e renderiza sem simulação.
+    if (BACKEND.enabled && BACKEND.token) {
+      try { await pullBackend(); } catch (e) { /* login overlay já trata */ }
+      renderKpis();
+      renderAlerts();
+      renderTopCams();
+      updateHeatmap();
+      // mantém gráfico e UI como estão (dados por banda continuam no dataset local por enquanto).
+      return;
+    }
+
+    // garante mapa manual sempre
+    if (typeof FORCE_MANUAL_HEATMAP !== "undefined" && FORCE_MANUAL_HEATMAP) {
+      updateZoneHeatValues();
+    }
       // time
       const d = new Date();
       document.getElementById("clock").textContent = d.toLocaleTimeString("pt-BR");
@@ -2315,18 +2975,7 @@ function initCharts(){
         };
       });
 
-      state.camsSSP = state.camsSSP.map(c=>{
-        const online = (c.status==="ON");
-        const step = online ? rand(-30, 70) : rand(-8, 10);
-        const pass = clamp(c.passantes + step, 0, 980);
-        return {
-          ...c,
-          passantes: pass,
-          peakNight: Math.max(c.peakNight, pass + rand(0, 150)),
-          peakAll: Math.max(c.peakAll, pass + rand(120, 260)),
-          alerts: clamp(c.alerts + (Math.random()<.12 ? (Math.random()<.5?-1:1) : 0), 0, 7)
-        };
-      });
+
 
       // Bands drift (simulate changes)
       state.allBands = state.allBands.map(b=>{
@@ -2342,6 +2991,7 @@ function initCharts(){
           return { ...x, value: Math.max(8000, x.value + delta) };
         });
       }
+      rebuildSSPSectors();
 
       // Render DOM
       renderKPIs();
@@ -2396,7 +3046,87 @@ charts.allBandsCompact.update("none");
       document.getElementById(id).classList.remove("open");
     }
 
-    function wireModals(){
+    /* ============================================================
+   MODALS — FIX (close button + ESC)
+   Cole logo após openModal() e closeModal()
+   ============================================================ */
+
+    // 1) Botão "Fechar" via delegation (funciona mesmo se wireModals() falhar)
+    document.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-close]");
+      if (!btn) return;
+
+      e.preventDefault();
+      const id = btn.getAttribute("data-close");
+      if (id) closeModal(id);
+    });
+
+    // 2) Fechar com ESC (fecha o último modal aberto)
+    document.addEventListener("keydown", (e) => {
+      if (e.key !== "Escape") return;
+
+      // fecha o modal mais "no topo" (último .modal.open na página)
+      const opened = Array.from(document.querySelectorAll(".modal.open"));
+      if (!opened.length) return;
+
+      opened[opened.length - 1].classList.remove("open");
+    });
+
+
+    
+function getSSPHistoryFor(camId){
+  // Mapeia os cards-setores (SSP) para colunas do XLS
+  const MAP = {
+    "SSP_IN_ORLA": { label: "Entradas Orla (SSP 1 + SSP 2)", col: "IN_ORLA", valueLabel: "Passantes (IN Orla)" },
+    "SSP_IN_AVENIDA": { label: "Entradas Avenida (SSP 3 + SSP 4 + SSP 5)", col: "IN_AVENIDA", valueLabel: "Passantes (IN Avenida)" },
+    "SSP_OUT": { label: "Saídas (SSP 8)", col: "OUT", valueLabel: "Passantes (OUT)" }
+  };
+
+  if(camId === "SSP_IN_CAMAROTE"){
+    return { label:"Entradas Camarote (SSP 6 + SSP 7)", rows:[], valueLabel:"Passantes (IN Camarote)", note:"Sem histórico no XLS para Camarote. Este card fica preenchido manualmente no código (snapshot)." };
+  }
+
+  const meta = MAP[camId] || { label: camId, col: null, valueLabel: "Passantes" };
+  if(!meta.col){
+    return { label: meta.label, rows:[], valueLabel: meta.valueLabel, note:"Card não mapeado para coluna do XLS." };
+  }
+
+  const rows = (Array.isArray(XLS_DIA27) ? XLS_DIA27 : [])
+    .filter(r=>r && r.Hora!=null)
+    .map(r=>({
+      t: String(r.Hora),
+      v: Number(r[meta.col] ?? 0)
+    }));
+
+  return { label: meta.label, rows, valueLabel: meta.valueLabel };
+}
+
+function renderHistoryTable(container, rows, valueLabel){
+  const safe = (v)=>String(v==null ? "" : v);
+  const head = valueLabel || "Valor";
+  const body = rows.map(r=>`
+    <tr>
+      <td style="padding:8px 10px; border-bottom:1px solid rgba(255,255,255,.06); color:rgba(255,255,255,.72); white-space:nowrap;">${safe(r.t)}</td>
+      <td style="padding:8px 10px; border-bottom:1px solid rgba(255,255,255,.06); text-align:right; font-weight:800;">${Number.isFinite(r.v)? Math.round(r.v): "--"}</td>
+    </tr>
+  `).join("");
+
+  container.innerHTML = `
+    <div style="max-height:240px; overflow:auto; border:1px solid rgba(255,255,255,.08); border-radius:12px;">
+      <table style="width:100%; border-collapse:collapse; font-size:12px;">
+        <thead>
+          <tr>
+            <th style="position:sticky; top:0; background:rgba(10,12,18,.92); backdrop-filter: blur(6px); padding:9px 10px; text-align:left; color:rgba(255,255,255,.65); border-bottom:1px solid rgba(255,255,255,.08);">Hora</th>
+            <th style="position:sticky; top:0; background:rgba(10,12,18,.92); backdrop-filter: blur(6px); padding:9px 10px; text-align:right; color:rgba(255,255,255,.65); border-bottom:1px solid rgba(255,255,255,.08);">${head}</th>
+          </tr>
+        </thead>
+        <tbody>${body}</tbody>
+      </table>
+    </div>
+  `;
+}
+
+function wireModals(){
       document.getElementById("openBandsModal").addEventListener("click", ()=>{
         openModal("modalBands");
         applyBandsEventTitle();
@@ -2428,7 +3158,7 @@ charts.allBandsCompact.update("none");
 
       // Camera details (delegation)
       document.addEventListener("click", (e)=>{
-        const btn = e.target.closest("button[data-cam]");
+        const btn = e.target.closest("[data-cam]");
         if(!btn) return;
         const camId = btn.getAttribute("data-cam");
         const isSSP = btn.getAttribute("data-isssp")==="1";
@@ -2471,14 +3201,37 @@ charts.allBandsCompact.update("none");
           });
         }
 
-        openModal("modalCam");
+// Histórico: SSP usa XLS_DIA27 (completo); outras câmeras seguem mock por enquanto
+let histLabels = null;
+let histData = null;
+const histTitleEl = document.getElementById("camModalHistTitle");
+const histBox = document.getElementById("camModalHistory");
+
+if(isSSP){
+  const h = getSSPHistoryFor(camId);
+  if(histTitleEl) histTitleEl.textContent = `Histórico completo — ${h.label}`;
+  if(histBox){
+    if(h.rows && h.rows.length){
+      renderHistoryTable(histBox, h.rows, h.valueLabel);
+      histLabels = h.rows.map(r=>r.t);
+      histData = h.rows.map(r=>r.v);
+    } else {
+      histBox.innerHTML = `<div class="hint">${h.note || "Sem histórico disponível no XLS para este card."}</div>`;
+    }
+  }
+} else {
+  if(histTitleEl) histTitleEl.textContent = "Histórico (mock — últimos 30 min)";
+  if(histBox) histBox.innerHTML = `<div class="hint">Este detalhe ainda está em mock. No backend, este bloco vira uma série real (SQL).</div>`;
+}
+
+openModal("modalCam");
 
         // chart
         if(charts.camModal){
           charts.camModal.destroy();
           charts.camModal = null;
         }
-        charts.camModal = createCamModalChart();
+        charts.camModal = createCamModalChart(histLabels, histData);
       });
     }
 
@@ -2504,7 +3257,7 @@ charts.allBandsCompact.update("none");
       document.getElementById("anchorTs").textContent = nowISOAnchor();
 
       // Tick each minute
-      setInterval(tick, 60000);
+      setInterval(()=>tick(), 60000);
 
       // Optional: animate first 3 seconds quickly to "show life"
       let burst = 0;
@@ -2517,5 +3270,41 @@ charts.allBandsCompact.update("none");
 
     start();
   </script>
+
+<!-- AUTH OVERLAY (backend mode) -->
+<div id="authOverlay" class="modal-backdrop" style="display:none; align-items:center; justify-content:center;">
+  <div class="modal" style="max-width:520px; width:92%; display:block;">
+    <div class="modal-h">
+      <div>
+        <div class="modal-title">Acesso restrito</div>
+        <div class="modal-sub">Entre com seu usuário para carregar dados reais do banco.</div>
+      </div>
+      <button class="icon-btn" id="authCloseBtn" title="Fechar">✕</button>
+    </div>
+    <div class="modal-b">
+      <form id="authForm" autocomplete="on">
+        <div class="grid" style="grid-template-columns:1fr; gap:10px;">
+          <label class="field" style="display:block;">
+            <div class="lbl">Usuário</div>
+            <input id="authUser" class="input" type="text" name="username" placeholder="ex.: admin" required />
+          </label>
+          <label class="field" style="display:block;">
+            <div class="lbl">Senha</div>
+            <input id="authPass" class="input" type="password" name="password" placeholder="••••••••" required />
+          </label>
+        </div>
+        <div id="authErr" class="muted" style="margin-top:10px; display:none; color:#ff7b7b;">Falha no login.</div>
+        <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:14px;">
+          <button type="button" class="btn ghost" id="authDemoBtn">Entrar (modo demo)</button>
+          <button type="submit" class="btn">Entrar</button>
+        </div>
+      </form>
+      <div class="muted" style="margin-top:12px; font-size:12px;">
+        Dica: quando autenticado, o dashboard passa a puxar alertas, KPIs, Top câmeras e calor por zona via API.
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
